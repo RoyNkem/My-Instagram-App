@@ -13,7 +13,11 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+//        do {
+//            try Auth.auth().signOut()
+//        } catch {
+//            print("error")
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -21,29 +25,17 @@ class HomeViewController: UIViewController {
         print("Home")
         
         handleNotAuthenticated()
-        
-        signout()
     }
     
     func handleNotAuthenticated() {
         //Check Auth status
         if Auth.auth().currentUser == nil {
-            // show login
+            // show loginVC
             let loginVC = LoginViewController()
             
             loginVC.modalPresentationStyle = .fullScreen
             
             present(loginVC, animated: false)
-        }
-    }
-    
-    func signout() {
-        
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
         }
     }
 }

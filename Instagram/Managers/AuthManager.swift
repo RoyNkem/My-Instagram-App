@@ -63,4 +63,17 @@ public class AuthManager {
             print(username)
         }
     }
+    
+    //logout firebase user
+    public  func logout(completion: (Bool) -> Void) {
+        
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            completion(true)
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            completion(false)
+        }
+    }
 }
