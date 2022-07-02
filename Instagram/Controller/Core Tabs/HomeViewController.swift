@@ -18,7 +18,11 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print("Home")
+        
         handleNotAuthenticated()
+        
+        signout()
     }
     
     func handleNotAuthenticated() {
@@ -33,4 +37,13 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func signout() {
+        
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
 }

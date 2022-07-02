@@ -95,7 +95,7 @@ class RegistrationViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-    //MARK: - ASSIGN FRAMES
+        //MARK: - ASSIGN FRAMES
         
         usernameField.frame = CGRect(x: 30, y: view.safeAreaInsets.top + 100, width: view.width - 60, height: 52)
         
@@ -103,24 +103,44 @@ class RegistrationViewController: UIViewController {
         
         passwordField.frame = CGRect(x: 30, y: emailField.bottom + 15, width: view.width - 60, height: 52)
         
-        signupButton.frame = CGRect(x: 30, y: passwordField.bottom + 15, width: view.width - 60, height: 52)
+        signupButton.frame = CGRect(x: 30, y: passwordField.bottom + 45, width: view.width - 60, height: 52)
     }
     
     //MARK: - BUTTON SELECTOR
-    @objc func didTapSignupButton() {
+    @objc func didTapSignupButton(_ sender: UIButton) {
         
-        emailField.resignFirstResponder()
-        usernameField.resignFirstResponder()
-        passwordField.resignFirstResponder()
-        
-        guard let email = emailField.text, !email.isEmpty,
-              let password = passwordField.text, !password.isEmpty, password.count >= 8,
-              let username = usernameField.text, !username.isEmpty else {
-                  return
-              }
-        
-        let vc = HomeViewController()
-        present(vc, animated: true)
+        sender.showAnimation{
+            
+            //use [weak self] in the closure to make reference to class weak
+            [weak self] in self?.usernameField.resignFirstResponder()
+            // self becomes optional self could be nil any time due to the weak reference.
+            guard let self = self else { return }
+            self.passwordField.resignFirstResponder()
+            self.emailField.resignFirstResponder()
+            
+            // check that field are not empty
+            guard let email = self.emailField.text, !email.isEmpty,
+                  let password = self.passwordField.text, !password.isEmpty, password.count >= 8,
+                  let username = self.usernameField.text, !username.isEmpty else {
+                      return
+                  }
+            
+            //register the new user on button tap
+            AuthManager.shared.registerNewUser(username: username, email: email, password: password) { registered in
+                DispatchQueue.main.async {
+                    if registered {
+                        // good to go
+                    }
+                    else {
+                        //                    let alert = UIAlertController(title: "Registration Error", message: "Unable to register user", preferredStyle: .alert)
+                        //                    let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+                        //
+                        //                    alert.addAction(action)
+                        //                    self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -133,7 +153,7 @@ extension RegistrationViewController: UITextFieldDelegate {
             passwordField.becomeFirstResponder()
         }
         else if textField == passwordField {
-            didTapSignupButton()
+            didTapSignupButton(signupButton)
         }
         return true
     }

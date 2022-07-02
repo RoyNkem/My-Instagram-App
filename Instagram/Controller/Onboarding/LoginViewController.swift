@@ -10,6 +10,8 @@ import SafariServices
 
 class LoginViewController: UIViewController {
     
+    deinit {print("dismiss loginVC")}
+    
     struct Constants {
         static let cornerRadius: CGFloat = 8.0
         //        static let width: CGFloat = frame.size.width - 60
@@ -58,6 +60,7 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = Constants.cornerRadius
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
+        //        button.showsTouchWhenHighlighted = true
         return button
     }()
     
@@ -173,14 +176,21 @@ class LoginViewController: UIViewController {
     // MARK: - BUTTON SELECTORS
     //functions called when buttons are tapped
     
-    @objc private func didTapLoginButton() {
-
-        usernameEmailField.resignFirstResponder()
-        passwordField.resignFirstResponder()
+    @objc private func didTapLoginButton(_ sender: UIButton) {
+        
+        sender.showAnimation {
+            
+            //use [weak self] in the closure to make reference to class weak
+            [weak self] in self?.usernameEmailField.resignFirstResponder()
+            
+            // self becomes optional. self could be nil any time due to the weak reference.
+            guard let self = self else { return } // make sure self is not nil by optional binding
+            self.passwordField.resignFirstResponder()
+        }
         
         // check that email and password field are entered
-        guard let usernameEmail = usernameEmailField.text, !usernameEmail.isEmpty,
-              let password = passwordField.text, !password.isEmpty, password.count >= 8 else {
+        guard let usernameEmail = self.usernameEmailField.text, !usernameEmail.isEmpty,
+              let password = self.passwordField.text, !password.isEmpty, password.count >= 8 else {
                   return
               }
         //login functionality
@@ -202,6 +212,7 @@ class LoginViewController: UIViewController {
                 if success {
                     // user logged in
                     self.dismiss(animated: true, completion: nil)
+                    
                 }
                 else {
                     // error logging in
@@ -210,11 +221,12 @@ class LoginViewController: UIViewController {
                     
                     alert.addAction(action)
                     self.present(alert, animated: true, completion: nil)
+                    
+                    print("error")
                 }
             }
         }
     }
-    
     @objc private func didTapCreateAccountButton() {
         print("Create Account Button tapped")
         
@@ -239,7 +251,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func didTapPrivacyButton() {
-
+        
         let urlString = "https://help.instagram.com/519522125107875/?helpref=hc_fnav"
         guard let url = URL(string: urlString) else {
             return
@@ -257,7 +269,7 @@ extension LoginViewController: UITextFieldDelegate {
             passwordField.becomeFirstResponder()
         }
         else if textField == passwordField {
-            didTapLoginButton()
+            didTapLoginButton(loginButton)
         }
         
         return true
