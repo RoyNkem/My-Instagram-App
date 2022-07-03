@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import SafariServices
 
 struct SettingsCellModel {
     var title: String
+//    var image: String
     var handler: (() -> Void) //closure that takes no argument and returns void
 }
 
@@ -24,41 +26,161 @@ final class SettingsViewController: UIViewController {
         return tableView
     }()
     
-    private var data = [[SettingsCellModel]]()
+    private let searchBar: UISearchBar = {
         
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Search"
+        return searchBar
+    }()
+    
+    private var data = [[SettingsCellModel]]()
+    
+    //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchBar.delegate = self
         
         configureModels()
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        view.addSubviews(tableView)
+        view.addSubviews(tableView, searchBar)
         
         view.backgroundColor = .systemBackground
     }
     
+    //MARK: - VIEW DID LAYOUT SUBVIEW
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        searchBar.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.bounds.width, height: 40)
         tableView.frame = view.bounds
     }
     
-    //congigure cell in each section
+    //congigure cells in each sections
     private func configureModels() {
-        let section = [
-            SettingsCellModel(title: "Log out") { [weak self] in
-                self?.didTapLogout()
-            }
+        
+        // setup tableview grouped sections
+        let sectionOne = [
+            SettingsCellModel(title: "Edit Profile") { [weak self] in
+                self?.didTapEditProfile()},
+            SettingsCellModel(title: "Follow and invite friends") { [weak self] in
+                self?.didTapInviteFriends()},
+            SettingsCellModel(title: "Save original posts") { [weak self] in
+                self?.didTapSaveOriginalPhotos()}
         ]
-        data.append(section)
+        data.append(sectionOne)
+        
+        let sectionTwo = [
+            SettingsCellModel(title: "Terms of services") { [weak self] in
+                self?.openURL(type: .terms)},
+            SettingsCellModel(title: "Privacy policy") { [weak self] in
+                self?.openURL(type: .privacy)},
+            SettingsCellModel(title: "Help") { [weak self] in
+                self?.openURL(type: .help)},
+            SettingsCellModel(title: "About") { [weak self] in
+                self?.openURL(type: .about)}
+        ]
+        data.append(sectionTwo)
+        
+        let logoutSection = [
+            SettingsCellModel(title: "Add account") { [weak self] in
+                self?.didTapAddAccount()},
+            SettingsCellModel(title: "Log out") { [weak self] in
+                self?.didTapLogout()}
+        ]
+        data.append(logoutSection)
+        
     }
     
+    //MARK: - CELL TAP FUNCTIONS
+    private func didTapEditProfile() {
+        let vc = EditProfileViewController()
+        vc.title = "Edit Profile"
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func didTapInviteFriends() {
+      // show share sheet to invite friends
+        
+    }
+    
+    private func didTapSaveOriginalPhotos() {
+        
+    }
+    
+    enum SettingsURLType {
+        case terms, privacy, help, about
+    }
+    
+    //MARK: - Open Url Webpages
+    private func openURL(type: SettingsURLType) {
+        let urlString: String
+        
+        switch type {
+        case .terms: urlString =
+            "https://help.instagram.com/581066165581870"
+        case .privacy: urlString =
+            "https://help.instagram.com/519522125107875/?helpref=hc_fnav"
+        case .help: urlString =
+            "https://help.instagram.com"
+        case .about: urlString =
+            "https://github.com/RoyNkem"
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true)
+    }
+    
+    //MARK: - Tap Add Account
+    private func didTapAddAccount() {
+        
+        //Add account by login or signup alert sheet
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        //change font of title and message.
+        let titleFont = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)]
+        let titleAttrString = NSMutableAttributedString(string: "Add account", attributes: titleFont)
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        
+        //add action buttons
+        let actionLogin = UIAlertAction(title: "Log In to Existing Account", style: .default) { [weak self] _ in
+            //login
+            let vc = LoginViewController()
+            self?.present(UINavigationController(rootViewController: vc), animated: true)
+        }
+        let actionCreateAccount = UIAlertAction(title: "Create New Account", style: .default) { [weak self] _ in
+            //create Account
+            let vc = RegistrationViewController()
+            vc.title = "Create New Account"
+            self?.present(UINavigationController(rootViewController: vc), animated: true)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+        
+        alert.addAction(actionLogin)
+        alert.addAction(actionCreateAccount)
+        alert.addAction(cancel)
+        //        alert.view.layer.cornerRadius = 40
+        
+        present(alert, animated: true) {
+            alert.view.superview?.isUserInteractionEnabled = true // allow touch event outside alertVC to dismiss alert
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
+    }
+    
+    
+    //MARK: - Tap Logout
     private func didTapLogout() {
         
         // show action sheet when logout button tapped
-        let logoutSheet = UIAlertController(title: "Log out", message: "Are you sure you want to logout", preferredStyle: .actionSheet)
+        let logoutSheet = UIAlertController(title: "Log out", message: "Are you sure you want to logout?", preferredStyle: .alert)
         
         let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -87,30 +209,43 @@ final class SettingsViewController: UIViewController {
         logoutSheet.popoverPresentationController?.sourceView = tableView
         logoutSheet.popoverPresentationController?.sourceRect = tableView.bounds
         
-        present(logoutSheet, animated: true)
+        present(logoutSheet, animated: true) {
+            logoutSheet.view.superview?.isUserInteractionEnabled = true // allow touch event outside alertVC to dismiss alert
+            logoutSheet.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
     }
+    
 }
+
+//:MARK: - EXTENSION
+
+extension SettingsViewController: UISearchBarDelegate {
+    
+}
+
+
 //MARK: - TABLEVIEW DELEGATE AND DATASOURCE
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     //datasource methods
     func numberOfSections(in tableView: UITableView) -> Int {
-//        print("section: \(data.count)")
-        return 1
+        //        print("section: \(data.count)")
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print("logout row: \(data[section].count)")
+        //        print("logout row: \(data[section].count)")
         return data[section].count
     }
     
     //delegate methods
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        cell.textLabel?.text = data[indexPath.section][indexPath.row].title
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        //        cell.textLabel?.text = data[indexPath.section][indexPath.row].title
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = data[indexPath.section][indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     

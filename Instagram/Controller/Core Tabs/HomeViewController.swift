@@ -10,19 +10,30 @@ import FirebaseAuth
 
 class HomeViewController: UIViewController {
     
+    private let tableView: UITableView = {
+       
+        let tableView = UITableView()
+        tableView.register(InstagramFeedTableViewCell.self, forCellReuseIdentifier: InstagramFeedTableViewCell.identifier)
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        do {
-//            try Auth.auth().signOut()
-//        } catch {
-//            print("error")
-//        }
+        view.addSubviews(tableView)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.frame = view.bounds
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("Home")
         
         handleNotAuthenticated()
     }
@@ -38,4 +49,29 @@ class HomeViewController: UIViewController {
             present(loginVC, animated: false)
         }
     }
+}
+
+//MARK: - EXTENSION
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedTableViewCell.identifier, for: indexPath) as! InstagramFeedTableViewCell
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }

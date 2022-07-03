@@ -77,7 +77,15 @@ extension UITextField {
 //MARK: - STRING
 extension String {
     // Avoid problems when registering users with @ or . on firebase
-    func safeDatabaseKey() -> String {
+    public func safeDatabaseKey() -> String {
         return self.replacingOccurrences(of: "@", with: "-").replacingOccurrences(of: ".", with: "-")
+    }
+}
+
+//MARK: - VIEWCONTROLLER
+extension UIViewController {
+    //Dismiss contoller when tap outside its  area
+    @objc func alertControllerBackgroundTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

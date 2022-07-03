@@ -14,8 +14,7 @@ final class ExploreViewController: UIViewController {
         
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search"
-        searchBar.showsBookmarkButton = true
-        searchBar.backgroundColor = .secondarySystemBackground
+        searchBar.backgroundColor = .systemBackground
         return searchBar
     }()
     
