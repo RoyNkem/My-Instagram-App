@@ -61,8 +61,6 @@ extension UIView {
     }
 }
 
-
-
 // MARK: - UITEXTFIELD
 
 extension UITextField {
@@ -84,7 +82,7 @@ extension String {
 
 //MARK: - VIEWCONTROLLER
 extension UIViewController {
-    //Dismiss contoller when tap outside its  area
+    //Dismiss contoller when you tap outside its  area
     @objc func alertControllerBackgroundTapped() {
         self.dismiss(animated: true, completion: nil)
     }

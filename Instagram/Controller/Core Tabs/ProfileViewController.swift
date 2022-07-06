@@ -12,16 +12,26 @@ final class ProfileViewController: UIViewController {
     
     private var collectionView: UICollectionView? // optional because instantiate with flowlayout
     
+    //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: view.width/3, height: view.height/3)
+        layout.itemSize = CGSize(width: view.width/3, height: view.width/3)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
+        collectionView?.backgroundColor = .red
+        
+        //cell
+        collectionView?.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        
+        //Headers
+        collectionView?.register(ProfileInfoHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier)
+        
+        collectionView?.register(ProfileTabsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ProfileTabsCollectionReusableView.identifier)
         collectionView?.delegate = self
         collectionView?.dataSource = self
         
@@ -42,6 +52,7 @@ final class ProfileViewController: UIViewController {
         collectionView?.frame = view.bounds
     }
     
+    // set up settings gear as nav item
     func configureNavigationBar() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done
@@ -60,15 +71,19 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 30
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+        cell.backgroundColor = .systemBlue
+        return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         collectionView.deselectItem(at: indexPath, animated: true)
-
+        
     }
 }

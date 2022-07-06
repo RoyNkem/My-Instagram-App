@@ -58,7 +58,6 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = Constants.cornerRadius
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
-        //        button.showsTouchWhenHighlighted = true
         return button
     }()
     
@@ -97,7 +96,7 @@ class LoginViewController: UIViewController {
     private let headerView: UIView = {
         
         let header = UIView()
-        header.clipsToBounds = true
+        header.clipsToBounds = true //makes the subview(background image) to be clipped to the header bounds 
         let backgroundImage = UIImageView(image: UIImage(named: "gradient"))
         header.addSubview(backgroundImage)
         return header
