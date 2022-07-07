@@ -39,6 +39,7 @@ final class ExploreViewController: UIViewController {
         }
 
         view.addSubviews(collectionView)
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLayoutSubviews() {

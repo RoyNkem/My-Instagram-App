@@ -15,6 +15,7 @@ class CameraViewController: UIViewController {
         
         navigationController?.setToolbarHidden(true, animated: false)
         
+        view.backgroundColor = .systemBackground
     }
     
     private func didTapTakePicture() {

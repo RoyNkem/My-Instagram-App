@@ -24,6 +24,8 @@ class HomeViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLayoutSubviews() {

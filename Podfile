@@ -11,6 +11,7 @@ target 'Instagram' do
 
 # Appirater
 pod "Appirater"
+pod "SDWebImage"
 
 # Firebase
 pod 'FirebaseAuth'

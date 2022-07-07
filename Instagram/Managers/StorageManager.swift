@@ -8,18 +8,6 @@
 import Foundation
 import FirebaseStorage
 
-public struct UserPost {
-    let postType: UserPostType
-}
-
-public enum UserPostType {
-    case photo, video
-}
-
-public enum IGStorageManagerError: Error {
-    case failedToDownload
-}
-
 /// Firebase StorageManager
 public class StorageManager {
     
