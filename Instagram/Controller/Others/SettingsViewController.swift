@@ -49,6 +49,7 @@ final class SettingsViewController: UIViewController {
         view.addSubviews(tableView, searchBar)
         
         view.backgroundColor = .systemBackground
+        
     }
     
     //MARK: - VIEW DID LAYOUT SUBVIEW

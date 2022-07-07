@@ -19,17 +19,11 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "roy.aiyetin"
+        
         //cells layout
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
-        let size = (view.width - 4)/3
-        layout.itemSize = CGSize(width: size, height: size)
-        layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 1
-        
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
+        collectionViewLayout()
+                
         collectionView?.backgroundColor = .secondarySystemBackground
         
         //cell
@@ -54,6 +48,18 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .systemBackground
     }
     
+    private func collectionViewLayout() {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
+        let size = (view.width - 4)/3
+        layout.itemSize = CGSize(width: size, height: size)
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -65,6 +71,7 @@ final class ProfileViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done
                                                             , target: self, action: #selector(didTapSettingsButton))
+//        self.navigationItem.backBarButtonItem?.title = ""
     }
     
     @objc func didTapSettingsButton() {
@@ -134,7 +141,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         //height for supplementary views, width remains same
         if section == 0 { // section header height
-            return CGSize(width: collectionView.width, height: collectionView.height/3)
+            return CGSize(width: collectionView.width, height: collectionView.height/3.5)
         }
         // section tabs height
         return CGSize(width: collectionView.width, height: 65)
