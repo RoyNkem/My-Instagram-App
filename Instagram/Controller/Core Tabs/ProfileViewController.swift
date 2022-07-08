@@ -83,8 +83,8 @@ final class ProfileViewController: UIViewController {
 
 //MARK: - EXTENSION
 
-extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfileTabsCollectionReusableViewDelegate {
+    //MARK: - TableView
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2 // section 0 & section 1
     }
@@ -130,6 +130,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             //tabs header
             let tabControlHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileTabsCollectionReusableView.identifier, for: indexPath) as! ProfileTabsCollectionReusableView
             
+            tabControlHeader.delegate = self
             return tabControlHeader
         } else {
             let profileHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier, for: indexPath) as! ProfileInfoHeaderCollectionReusableView
@@ -144,6 +145,22 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return CGSize(width: collectionView.width, height: collectionView.height/3.5)
         }
         // section tabs height
-        return CGSize(width: collectionView.width, height: 65)
+        return CGSize(width: collectionView.width, height: 50)
     }
+    
+    //MARK: - Tab View Delegate
+    func didTapGridButtonTab(_ header: ProfileTabsCollectionReusableView) {
+      //reload collection view with data
+    }
+    func didTapTaggedButtonTab(_ header: ProfileTabsCollectionReusableView) {
+        //reload collection view with data
+
+    }
+    func didTapVideoButtonTab(_ header: ProfileTabsCollectionReusableView) {
+        //reload collection view with data
+
+    }
+    
 }
+
+

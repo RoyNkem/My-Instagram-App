@@ -127,15 +127,22 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     // the view controller should handle the functions rather than the cell class
     @objc func didTapFollowerButton() { //leverage the delegates to tell the view controller what happens so it knows where the button call comes from
         delegate?.profileHeaderDidTapFollowersButton(self)
+        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
+        vc.navigationItem.title = "Followers"
+        vc.navigationItem.largeTitleDisplayMode = .never
     }
     @objc func didTapFollowingButton() {
         delegate?.profileHeaderDidTapFollowingButton(self)
+        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
+        vc.navigationItem.title = "Followers"
+        vc.navigationItem.largeTitleDisplayMode = .never
     }
     @objc func didTapEditProfileButton() {
         delegate?.profileHeaderDidTapEditButton(self)
     }
     @objc func didTapPostButton() {
         delegate?.profileHeaderDidTapPostButton(self)
+//        collectionView?.scrollToItem(at: IndexPath.row 1, at: section 0, animated: true)
     }
     
     //MARK: - Assign Frames
