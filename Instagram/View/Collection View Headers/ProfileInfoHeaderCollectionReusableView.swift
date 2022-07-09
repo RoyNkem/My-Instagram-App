@@ -12,6 +12,7 @@ protocol ProfileInfoHeaderCollectionReusableViewDelegate: AnyObject {
     func profileHeaderDidTapEditButton(_ header: ProfileInfoHeaderCollectionReusableView)
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoHeaderCollectionReusableView)
     func profileHeaderDidTapFollowingButton(_ header: ProfileInfoHeaderCollectionReusableView)
+    func profileHeaderDidTapExtraButton(_ header: ProfileInfoHeaderCollectionReusableView)
 }
 
 final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
@@ -121,6 +122,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         followingButton.addTarget(self, action: #selector (didTapFollowingButton), for: .touchUpInside)
         editProfileButton.addTarget(self, action: #selector (didTapEditProfileButton), for: .touchUpInside)
         postButton.addTarget(self, action: #selector (didTapPostButton) , for: .touchUpInside)
+        extraButton.addTarget(self, action: #selector (didTapExtraButton), for: .touchUpInside)
     }
     
     //MARK: - Action Selectors
@@ -139,10 +141,14 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     }
     @objc func didTapEditProfileButton() {
         delegate?.profileHeaderDidTapEditButton(self)
+        
     }
     @objc func didTapPostButton() {
         delegate?.profileHeaderDidTapPostButton(self)
-//        collectionView?.scrollToItem(at: IndexPath.row 1, at: section 0, animated: true)
+    }
+    @objc func didTapExtraButton() {
+        delegate?.profileHeaderDidTapExtraButton(self)
+        extraButton.setImage(UIImage(systemName: "chevron.up"), for: .selected)
     }
     
     //MARK: - Assign Frames
