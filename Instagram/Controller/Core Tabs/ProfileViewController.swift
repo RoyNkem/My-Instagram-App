@@ -23,7 +23,7 @@ final class ProfileViewController: UIViewController {
         
         //cells layout
         collectionViewLayout()
-                
+        
         collectionView?.backgroundColor = .secondarySystemBackground
         
         //cell
@@ -71,7 +71,7 @@ final class ProfileViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done
                                                             , target: self, action: #selector(didTapSettingsButton))
-//        self.navigationItem.backBarButtonItem?.title = ""
+        //        self.navigationItem.backBarButtonItem?.title = ""
     }
     
     @objc func didTapSettingsButton() {
@@ -83,8 +83,8 @@ final class ProfileViewController: UIViewController {
 
 //MARK: - EXTENSION
 
-extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfileTabsCollectionReusableViewDelegate {
-    //MARK: - TableView
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfileTabsCollectionReusableViewDelegate, ProfileInfoHeaderCollectionReusableViewDelegate {
+    //MARK: - Collection View
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2 // section 0 & section 1
     }
@@ -98,18 +98,18 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let model = userposts[indexPath.row]
+        //        let model = userposts[indexPath.row]
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         cell.configure(with: "Roy1")
-//        cell.configure(with: model)
+        //        cell.configure(with: model)
         cell.backgroundColor = .systemBackground
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //get the model and open post controller
-//        let model = userposts[indexPath.row]
+        //        let model = userposts[indexPath.row]
         
         let vc = PostViewController(model: nil)
         vc.navigationItem.title = "Posts"
@@ -135,6 +135,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         } else {
             let profileHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier, for: indexPath) as! ProfileInfoHeaderCollectionReusableView
             
+            profileHeader.delegate = self
             return profileHeader
         }
     }
@@ -148,19 +149,45 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         return CGSize(width: collectionView.width, height: 50)
     }
     
-    //MARK: - Tab View Delegate
+    //MARK: - Profile Tab View Delegate
     func didTapGridButtonTab(_ header: ProfileTabsCollectionReusableView) {
-      //reload collection view with data
+        //reload collection view with data
     }
     func didTapTaggedButtonTab(_ header: ProfileTabsCollectionReusableView) {
         //reload collection view with data
-
+        
     }
     func didTapVideoButtonTab(_ header: ProfileTabsCollectionReusableView) {
         //reload collection view with data
-
+        
     }
     
+    //MARK: - Profile Info View Delegate
+    func profileHeaderDidTapEditButton(_ header: ProfileInfoHeaderCollectionReusableView) {
+        let vc = EditProfileViewController()
+        vc.navigationItem.title = "Edit Profile"
+        let navVC = UINavigationController(rootViewController: vc)
+        present(navVC, animated: true, completion: nil)
+    }
+    func profileHeaderDidTapPostButton(_ header: ProfileInfoHeaderCollectionReusableView) {
+        //scroll to posts in collection view cells
+        collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+    }
+    func profileHeaderDidTapFollowersButton(_ header: ProfileInfoHeaderCollectionReusableView) {
+        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
+        vc.navigationItem.title = "Followers"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    func profileHeaderDidTapFollowingButton(_ header: ProfileInfoHeaderCollectionReusableView) {
+        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
+        vc.navigationItem.title = "Following"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    func profileHeaderDidTapExtraButton(_ header: ProfileInfoHeaderCollectionReusableView) {
+        collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+    }
 }
 
 
