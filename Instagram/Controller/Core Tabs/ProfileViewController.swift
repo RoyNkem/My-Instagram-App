@@ -174,13 +174,13 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
     }
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
+        let vc = ListViewController(data: ["Wizkid", "Burna Boy", "Davido", "Trey Songz", "Wiz Khalifa", "Jay z"])
         vc.navigationItem.title = "Followers"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
     func profileHeaderDidTapFollowingButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
+        let vc = ListViewController(data: ["Wizkid", "Burna Boy", "Davido", "Trey Songz", "Wiz Khalifa", "Jay z"])
         vc.navigationItem.title = "Following"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)

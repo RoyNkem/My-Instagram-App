@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300EE719287A2FDF00215246 /* UserFollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */; };
 		303C25632876100A00FA38BA /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */; };
 		303C2566287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C2565287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift */; };
 		303C2568287610DB00FA38BA /* ProfileTabsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C2567287610DB00FA38BA /* ProfileTabsCollectionReusableView.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowTableViewCell.swift; sourceTree = "<group>"; };
 		303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		303C2565287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		303C2567287610DB00FA38BA /* ProfileTabsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabsCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */,
 				307F169528722A71002540F7 /* FormTableViewCell.swift */,
 				30D366452870EBEE00813A84 /* Home Feed */,
+				300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				30D15DD5286F1DA70028A7A2 /* NotificationViewController.swift in Sources */,
 				305E8698286F3EE9000E2C5C /* AuthManager.swift in Sources */,
 				30C69F1F286F1E760018A46B /* PostEditViewController.swift in Sources */,
+				300EE719287A2FDF00215246 /* UserFollowTableViewCell.swift in Sources */,
 				30C69F27286F1EAB0018A46B /* SearchViewController.swift in Sources */,
 				30D15DCF286F1D7B0028A7A2 /* ProfileViewController.swift in Sources */,
 				30C69F2D286F27790018A46B /* RegistrationViewController.swift in Sources */,
