@@ -8,7 +8,7 @@
 import UIKit
 
 class ListViewController: UIViewController {
-
+    
     private let data: [String]
     
     //we want to provide some data whenever we enter the list of followers or following
@@ -23,15 +23,15 @@ class ListViewController: UIViewController {
     
     //MARK: - Declaring UI Elements
     private let tableView: UITableView = {
-       let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        let tableView = UITableView()
+        tableView.register(UserFollowTableViewCell.self, forCellReuseIdentifier: UserFollowTableViewCell.identifier)
         return tableView
     }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -39,30 +39,34 @@ class ListViewController: UIViewController {
         
         view.addSubviews(tableView)
     }
-   
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         tableView.frame = view.bounds
     }
-
+    
 }
 
+//MARK: - EXTENSIONS
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserFollowTableViewCell.identifier, for: indexPath) as! UserFollowTableViewCell
+        cell.configure(with: "")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //go to profile of selected cell
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
