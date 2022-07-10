@@ -9,10 +9,10 @@ import UIKit
 
 class ListViewController: UIViewController {
     
-    private let data: [String]
+    private let data: [UserRelationship]
     
     //we want to provide some data whenever we enter the list of followers or following
-    init(data: [String]) {
+    init(data: [UserRelationship]) {
         self.data = data
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,7 +61,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserFollowTableViewCell.identifier, for: indexPath) as! UserFollowTableViewCell
-        cell.configure(with: "")
+        cell.configure(with: data[indexPath.row])
         return cell
     }
     

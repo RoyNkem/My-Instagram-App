@@ -174,13 +174,23 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
     }
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        let vc = ListViewController(data: ["Wizkid", "Burna Boy", "Davido", "Trey Songz", "Wiz Khalifa", "Jay z"])
+        
+        var mockData = [UserRelationship]()
+        for x in 0...10 {
+            mockData.append(UserRelationship(username: "joe_king", name: "Joe Steve", type: x % 2 == 0 ? .following : .not_following))
+        }
+        let vc = ListViewController(data: mockData)
         vc.navigationItem.title = "Followers"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
     func profileHeaderDidTapFollowingButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        let vc = ListViewController(data: ["Wizkid", "Burna Boy", "Davido", "Trey Songz", "Wiz Khalifa", "Jay z"])
+        
+        var mockData = [UserRelationship]()
+        for x in 0...10 {
+            mockData.append(UserRelationship(username: "joe_king", name: "Joe Steve", type: x % 2 == 0 ? .following : .not_following))
+        }
+        let vc = ListViewController(data: mockData)
         vc.navigationItem.title = "Following"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)

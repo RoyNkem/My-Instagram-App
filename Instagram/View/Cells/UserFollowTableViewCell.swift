@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UserFollowTableViewCellDelegate: AnyObject {
-    func didTapFollowUnfollowButton()
+    func didTapFollowUnfollowButton(model: UserRelationship)
 }
 
 enum FollowState {
@@ -26,6 +26,8 @@ final class UserFollowTableViewCell: UITableViewCell {
     static let identifier = "UserFollowTableViewCell"
     
     public weak var delegate: UserFollowTableViewCellDelegate? //protocol must conform to AnyObject for weak declaration
+    
+    private var model: UserRelationship?
     
     //MARK: - Declare UI Elements
     private let profileImageView: UIImageView = {
@@ -62,21 +64,35 @@ final class UserFollowTableViewCell: UITableViewCell {
         return button
     }()
     
+    //MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.clipsToBounds = true
         contentView.addSubviews(profileImageView,nameLabel,userNameLabel,followButton)
+        
+        followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapFollowButton() {
+        guard let model = model else {
+            return
+        }
+        delegate?.didTapFollowUnfollowButton(model: model)
     }
     
     public func configure(with model: UserRelationship) {
+        self.model = model
+        
         userNameLabel.text = model.username
         nameLabel.text = model.name
         switch model.type {
         case .following:
             // show unfollow button
+            followButton.setTitle("Unfollow", for: .normal)
         case .not_following:
             // show follow button
+            followButton.setTitle("Follow", for: .normal)
         }
     }
     
