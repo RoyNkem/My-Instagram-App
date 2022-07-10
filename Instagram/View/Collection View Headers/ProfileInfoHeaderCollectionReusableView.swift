@@ -38,6 +38,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         button.setTitle("Posts", for: .normal)
         button.backgroundColor = .systemBackground
         button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         return button
     }()
     
@@ -46,6 +47,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         button.setTitle("Followers", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemBackground
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         return button
     }()
     
@@ -54,6 +56,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         button.setTitle("Following", for: .normal)
         button.backgroundColor = .systemBackground
         button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         return button
     }()
     
@@ -63,6 +66,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         label.text = "Roy Aiyetin"
         label.textColor = .label
         label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
     
@@ -71,6 +75,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         let label = UILabel()
         label.text = "Mechanical Engineer, iOS Developer. Building UpTide with SwiftUI. Learning more about life everyday"
         label.textColor = .label
+        label.font = .systemFont(ofSize: 15, weight: .light)
         label.numberOfLines = 0
         return label
     }()
@@ -84,6 +89,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         button.setTitleColor(.label, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.borderColor = UIColor.secondaryLabel.cgColor
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         return button
     }()
     
