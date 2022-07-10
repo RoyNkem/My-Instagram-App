@@ -50,7 +50,7 @@ class ListViewController: UIViewController {
 }
 
 //MARK: - EXTENSIONS
-extension ListViewController: UITableViewDelegate, UITableViewDataSource {
+extension ListViewController: UITableViewDelegate, UITableViewDataSource, UserFollowTableViewCellDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -62,6 +62,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserFollowTableViewCell.identifier, for: indexPath) as! UserFollowTableViewCell
         cell.configure(with: data[indexPath.row])
+        cell.delegate = self // UserFollowTableViewCellDelegate
         return cell
     }
     
@@ -73,5 +74,17 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    
+    //MARK: - UserTableCell methods
+    func didTapFollowUnfollowButton(model: UserRelationship) {
+        switch model.type {
+        case .following: break
+            //perform firebase update to unfollow
+            
+        case .not_following: break
+            //perform firebase update to follow
+
+        }
     }
 }
