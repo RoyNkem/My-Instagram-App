@@ -44,6 +44,7 @@ class ListViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         tableView.frame = view.bounds
+        
     }
     
 }
@@ -68,5 +69,9 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         //go to profile of selected cell
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 }

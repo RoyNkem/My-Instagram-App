@@ -11,6 +11,16 @@ protocol UserFollowTableViewCellDelegate: AnyObject {
     func didTapFollowUnfollowButton()
 }
 
+enum FollowState {
+    case following, not_following
+}
+
+struct UserRelationship {
+    let username: String
+    let name: String
+    let type: FollowState
+}
+
 final class UserFollowTableViewCell: UITableViewCell {
     
     static let identifier = "UserFollowTableViewCell"
@@ -20,31 +30,35 @@ final class UserFollowTableViewCell: UITableViewCell {
     //MARK: - Declare UI Elements
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "Roy2")
+        imageView.layer.masksToBounds = true // for corner radius to work
+        imageView.image = UIImage(named: "Roy1")
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.secondaryLabel.cgColor
         return imageView
     }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.font = .systemFont(ofSize: 13, weight: .light)
+        label.text = "Joe Steve"
         return label
     }()
     
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.text = "Joe_king"
         return label
     }()
     
     private let followButton: UIButton = {
-       let button = UIButton()
-        
+        let button = UIButton()
+        button.backgroundColor = .link
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 4
+        button.setTitle("Follow", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         return button
     }()
     
@@ -55,8 +69,15 @@ final class UserFollowTableViewCell: UITableViewCell {
         contentView.addSubviews(profileImageView,nameLabel,userNameLabel,followButton)
     }
     
-    public func configure(with model: String) {
-        
+    public func configure(with model: UserRelationship) {
+        userNameLabel.text = model.username
+        nameLabel.text = model.name
+        switch model.type {
+        case .following:
+            // show unfollow button
+        case .not_following:
+            // show follow button
+        }
     }
     
     override func prepareForReuse() {
@@ -74,6 +95,15 @@ final class UserFollowTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        profileImageView.frame = CGRect(x: 3, y: 3, width: contentView.height - 6, height: contentView.height - 6)
+        profileImageView.layer.cornerRadius = profileImageView.width/2
+
+        let buttonWidth = contentView.width > 500 ? 200.0 : contentView.width/6
+        followButton.frame = CGRect(x: contentView.width - buttonWidth - 5, y: contentView.height/3, width: buttonWidth, height: contentView.height/3)
+        
+        let labelHeight = (contentView.height - 5)/4
+        userNameLabel.frame = CGRect(x: profileImageView.right + 10, y: labelHeight, width: contentView.width - profileImageView.width - 8 - buttonWidth, height: labelHeight)
+        nameLabel.frame = CGRect(x: profileImageView.right + 10, y: userNameLabel.bottom + 5, width: contentView.width - profileImageView.width - 8 - buttonWidth, height: labelHeight)
         
     }
     required init?(coder: NSCoder) {

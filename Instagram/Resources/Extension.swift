@@ -65,7 +65,7 @@ extension UIView {
 
 extension UITextField {
     
-    public func setLeftPaddingPoints(_ amount: CGFloat){
+    public func setLeftPaddingPoints(_ amount: CGFloat){ //the width of the left view is the padding before textfield contents
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.leftView = padding
         self.leftViewMode = .always
