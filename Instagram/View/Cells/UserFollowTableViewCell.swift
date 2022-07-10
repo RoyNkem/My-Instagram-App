@@ -15,7 +15,7 @@ enum FollowState {
     case following, not_following
 }
 
-struct UserRelationship {
+public struct UserRelationship {
     let username: String
     let name: String
     let type: FollowState
@@ -71,6 +71,8 @@ final class UserFollowTableViewCell: UITableViewCell {
         contentView.clipsToBounds = true
         contentView.addSubviews(profileImageView,nameLabel,userNameLabel,followButton)
         
+        selectionStyle = .none // color of cell when selected/tapped
+        
         followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
     }
     
@@ -81,6 +83,7 @@ final class UserFollowTableViewCell: UITableViewCell {
         delegate?.didTapFollowUnfollowButton(model: model)
     }
     
+    //Exchange between model data and labels in cell
     public func configure(with model: UserRelationship) {
         self.model = model
         
@@ -90,6 +93,10 @@ final class UserFollowTableViewCell: UITableViewCell {
         case .following:
             // show unfollow button
             followButton.setTitle("Unfollow", for: .normal)
+            followButton.setTitleColor(.label, for: .normal)
+            followButton.backgroundColor = .systemBackground
+            followButton.layer.borderWidth = 1
+            followButton.layer.borderColor = UIColor.secondaryLabel.cgColor
         case .not_following:
             // show follow button
             followButton.setTitle("Follow", for: .normal)
@@ -114,7 +121,7 @@ final class UserFollowTableViewCell: UITableViewCell {
         profileImageView.frame = CGRect(x: 3, y: 3, width: contentView.height - 6, height: contentView.height - 6)
         profileImageView.layer.cornerRadius = profileImageView.width/2
 
-        let buttonWidth = contentView.width > 500 ? 200.0 : contentView.width/6
+        let buttonWidth = contentView.width > 500 ? 200.0 : contentView.width/5
         followButton.frame = CGRect(x: contentView.width - buttonWidth - 5, y: contentView.height/3, width: buttonWidth, height: contentView.height/3)
         
         let labelHeight = (contentView.height - 5)/4
