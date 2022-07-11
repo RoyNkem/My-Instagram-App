@@ -15,7 +15,7 @@ Curious? See more fun facts here [Fun Facts about Instagram](https://www.thefact
 
 ## Show some :heart: and star the repo to support the project.
 
-## Note :warning:
+## Note
 This repository is still in development and I will continue to add more features to it.
 
 ## Features :camera_flash:
@@ -51,6 +51,23 @@ This repository is still in development and I will continue to add more features
 <a href="https://github.com/" target="_blank"> <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/> 
 <a href="https://cocoapods.org" target="_blank"> <img src="https://img.shields.io/badge/cocoapods-fa2b01?style=for-the-badge&logo=cocoapods&logoColor=white" alt="cocoapods"/> </a>
 <a href="https://github.com/arashpayan/appirater" target="_blank"> <img src="https://img.shields.io/badge/appirater-1882e8?style=for-the-badge&logo=appirater&logoColor=white" alt="appirater"/> </a>
+
+## Screenshots
+
+<p float="left">
+<img src="https://user-images.githubusercontent.com/95645767/178236874-8c06307e-50a8-450b-99a9-3fd9bbb63207.png" alt="Profile light" width = "150">
+<img src="https://user-images.githubusercontent.com/95645767/178238639-20226cb1-295b-454e-bf98-08487b613ef6.png" alt="Profile dark" width = "150" >
+</p>
+
+<p float="left">
+<img src="https://user-images.githubusercontent.com/95645767/178239004-750fe719-bdc4-4df1-990f-2073a3614935.png" alt="Settings light" width = "150" >
+<img src="https://user-images.githubusercontent.com/95645767/178239032-01a901b0-eb50-4d6a-8123-e83a1a6fb598.png" alt="Edit Profile light" width = "150" >
+</p>
+
+<p float="left">
+<img src="https://user-images.githubusercontent.com/95645767/178240248-dcdff822-ed00-4590-8604-b8db8b429c5d.png" alt="Followers light" width = "150" >
+<img src="https://user-images.githubusercontent.com/95645767/178240236-55aaf502-b8e5-4405-a10c-7e300d4fe495.png" alt="Followers dark" width = "150" >
+</p>
 
 
 # Upcoming Features :ocean:
