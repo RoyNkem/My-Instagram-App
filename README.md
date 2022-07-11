@@ -1,4 +1,4 @@
-# My-Instagram-App <img src=" " width="35" height="35" />
+# My-Instagram-App <img src="https://user-images.githubusercontent.com/95645767/178226420-34f966b9-2168-41b0-866f-66ffa797f6b1.jpeg" width="35" height="35" />
 
 `Instagram` Clone created with `Swift` and `Firebase`.
 
