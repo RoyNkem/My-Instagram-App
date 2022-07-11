@@ -55,11 +55,11 @@ This repository is still in development and I will continue to add more features
 
 # Upcoming Features :ocean:
  -  Notifications for comments
+ -  Heart Animation when posts are liked
  -  Caching of Profiles, Images, Etc.
  -  Filters support for images
- -  Heart Animation when liking image
  -  Delete Posts
- -  Stories
+ -  Instagram Stories
  -  Send post to chats
 
 <p align="right">(<a href="#top">back to top</a>)</p>
