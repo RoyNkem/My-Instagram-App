@@ -68,7 +68,8 @@ This repository is still in development and I will continue to add more features
 <img src="https://user-images.githubusercontent.com/95645767/178240248-dcdff822-ed00-4590-8604-b8db8b429c5d.png" alt="Followers light" width = "150" >
 <img src="https://user-images.githubusercontent.com/95645767/178240236-55aaf502-b8e5-4405-a10c-7e300d4fe495.png" alt="Followers dark" width = "150" >
 </p>
-
+  
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Upcoming Features :ocean:
  -  Notifications for comments
