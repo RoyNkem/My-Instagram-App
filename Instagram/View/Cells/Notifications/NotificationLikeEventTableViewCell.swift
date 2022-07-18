@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 protocol NotificationLikeEventTableViewCellDelegate: AnyObject {
-    func didTapRelatedPostButton(model: String)
+    func didTapRelatedPostButton(model: UserNotification)
 }
 
 class NotificationLikeEventTableViewCell: UITableViewCell {
@@ -49,6 +49,13 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         
         contentView.clipsToBounds = true
         addSubviews(profileImageView, label, postButton)
+        
+        postButton.addTarget(self, action: #selector(didTapPostButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapPostButton() {
+        guard let model = model else { return }
+        delegate?.didTapRelatedPostButton(model: model)
     }
     
     public func configure(with model: UserNotification) {
