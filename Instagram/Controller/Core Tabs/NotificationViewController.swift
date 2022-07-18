@@ -46,12 +46,13 @@ final class NotificationViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-                
-        view.addSubviews(tableView, spinner, noNotificationsView)
+        
+        view.addSubviews(tableView, spinner)
         
         view.backgroundColor = .systemBackground
         
-        addNoNotificationsView()
+        fetchNotifications()
+        
     }
     
     public func fetchNotifications() {
@@ -67,7 +68,6 @@ final class NotificationViewController: UIViewController {
                                                     name: (first: "Steve", last: "Joe"), birthday: Date(), profilePhoto: URL(string: "https://www.google.com")!, gender: .male,
                                                     counts: UserCount(following: 1, followers: 1, posts: 3), joinDate: Date()), text: "Hello World")
             models.append(model)
-            
         }
     }
     
@@ -77,7 +77,7 @@ final class NotificationViewController: UIViewController {
         tableView.frame = view.bounds
         spinner.center = view.center
         
-        //        addNoNotificationsView()
+//        addNoNotificationsView()
     }
     
     private func addNoNotificationsView() {
@@ -92,6 +92,8 @@ final class NotificationViewController: UIViewController {
 //MARK: - EXTENSION
 
 extension NotificationViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    //data source methods
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -108,12 +110,13 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: NotificationLikeEventTableViewCell.identifier, for: indexPath) as! NotificationLikeEventTableViewCell
             
             cell.configure(with: model)
-            
+            cell.delegate = self
             return cell
             
         case .follow :
             let cell = tableView.dequeueReusableCell(withIdentifier: NotificationFollowEventTableViewCell.identifier, for: indexPath) as! NotificationFollowEventTableViewCell
-            
+            cell.configure(with: model)
+            cell.delegate = self
             return cell
         }
         
@@ -122,4 +125,20 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+
+//MARK: - Notification delegate method
+extension NotificationViewController: NotificationLikeEventTableViewCellDelegate, NotificationFollowEventTableViewCellDelegate {
+    
+    func didTapFollowUnfollowButton(model: UserNotification) {
+        print("tapped follow/unfollow")
+        //perform database update
+    }
+    
+    //Notification like custom delegate method
+    func didTapRelatedPostButton(model: UserNotification) {
+        print("tapped post")
+        //open post
+    }
+    
 }
