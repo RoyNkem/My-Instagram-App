@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol NotificationLikeEventTableViewCellDelegate: AnyObject {
     func didTapRelatedPostButton(model: String)
@@ -15,11 +16,14 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     
     static let identifier = "NotificationLikeEventTableViewCell"
     
+    private var model: UserNotification?
+    
     public weak var delegate: NotificationLikeEventTableViewCellDelegate?
     
     //MARK: - Declare UI Elements
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "Roy3")
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -28,13 +32,14 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .label
+        label.text = "Joe_king liked your photo"
         label.numberOfLines = 0
         return label
     }()
     
     private let postButton: UIButton = {
         let button = UIButton()
-        
+        button.setBackgroundImage(UIImage(named: "text"), for: .normal)
         return button
     }()
     
@@ -46,8 +51,21 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         addSubviews(profileImageView, label, postButton)
     }
     
-    public func configure(with model: String) {
+    public func configure(with model: UserNotification) {
+        self.model = model
         
+        switch model.type {
+            
+        case .like(let post): //this is where we configure the post 
+            let thumbnail = post.thumbnailImage
+            postButton.sd_setBackgroundImage(with: thumbnail, for: .normal, completed: nil)
+            
+        case .follow:
+            break
+        }
+        
+        label.text = model.text
+        profileImageView.sd_setImage(with: model.user.profilePhoto)
     }
     
     override func prepareForReuse() {
@@ -62,6 +80,17 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        let photoWidth = contentView.height - 6
+        profileImageView.frame = CGRect(x: 3, y: 3, width: photoWidth, height: photoWidth)
+        profileImageView.layer.cornerRadius = profileImageView.height/2
+        
+        let size = contentView.height - 4
+        postButton.frame = CGRect(x: contentView.width - size, y: 2, width: size, height: size)
+        
+        label.frame = CGRect(x: profileImageView.right, y: 0,
+                             width: contentView.width - size - profileImageView.width - 6,
+                             height: contentView.height)
     }
     
     required init?(coder: NSCoder) {

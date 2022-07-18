@@ -35,6 +35,7 @@ struct User {
     let bio: String
     let name: (first: String, last: String)
     let birthday: Date
+    let profilePhoto: URL
     let gender: Gender
     let counts: UserCount
     let joinDate: Date
