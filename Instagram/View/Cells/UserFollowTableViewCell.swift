@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UserFollowTableViewCellDelegate: AnyObject {
-    func didTapFollowUnfollowButton(model: UserRelationship)
+    func didTapFollowUnfollowButton(model: UserRelationship) // pass a parameter to help figure out the state of the user
 }
 
 enum FollowState {
@@ -89,6 +89,7 @@ final class UserFollowTableViewCell: UITableViewCell {
         
         userNameLabel.text = model.username
         nameLabel.text = model.name
+        
         switch model.type {
         case .following:
             // show unfollow button
@@ -97,6 +98,7 @@ final class UserFollowTableViewCell: UITableViewCell {
             followButton.backgroundColor = .systemBackground
             followButton.layer.borderWidth = 1
             followButton.layer.borderColor = UIColor.secondaryLabel.cgColor
+            
         case .not_following:
             // show follow button
             followButton.setTitle("Follow", for: .normal)

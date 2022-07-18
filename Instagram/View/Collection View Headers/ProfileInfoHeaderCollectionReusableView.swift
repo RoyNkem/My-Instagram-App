@@ -23,7 +23,6 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     //MARK: - Declare UI Elements
     private let profilePhotoImageView: UIImageView = {
-        
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.image = UIImage(named: "Roy2")
@@ -73,7 +72,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     private let bioLabel: UILabel = {
         
         let label = UILabel()
-        label.text = "Mechanical Engineer, iOS Developer. Building UpTide with SwiftUI. Learning more about life everyday"
+        label.text = "iOS Developer. Building UpTide with SwiftUI. Learning more about life everyday"
         label.textColor = .label
         label.font = .systemFont(ofSize: 15, weight: .light)
         label.numberOfLines = 0
@@ -134,15 +133,11 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     // the view controller should handle the functions rather than the cell class
     @objc func didTapFollowerButton() { //leverage the delegates to tell the view controller what happens so it knows where the button call comes from
         delegate?.profileHeaderDidTapFollowersButton(self)
-//        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
-//        vc.navigationItem.title = "Followers"
-//        vc.navigationItem.largeTitleDisplayMode = .never
+
     }
     @objc func didTapFollowingButton() {
         delegate?.profileHeaderDidTapFollowingButton(self)
-//        let vc = ListViewController(data: ["Wizkid, Burna Boy, Davido, Trey Songz, Wiz Khalifa, Jay z"])
-//        vc.navigationItem.title = "Followers"
-//        vc.navigationItem.largeTitleDisplayMode = .never
+
     }
     @objc func didTapEditProfileButton() {
         delegate?.profileHeaderDidTapEditButton(self)
@@ -153,7 +148,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     }
     @objc func didTapExtraButton() {
         delegate?.profileHeaderDidTapExtraButton(self)
-        extraButton.setImage(UIImage(systemName: "chevron.up"), for: .selected)
+//        extraButton.setImage(UIImage(systemName: "chevron.up"), for: .selected)
     }
     
     //MARK: - Assign Frames
