@@ -25,6 +25,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Roy3")
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 4
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -33,13 +34,13 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .label
         label.text = "Joe_king liked your photo"
+        label.font = .systemFont(ofSize: 13, weight: .light)
         label.numberOfLines = 0
         return label
     }()
     
     private let postButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "text"), for: .normal)
         return button
     }()
     
@@ -63,7 +64,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         
         switch model.type {
             
-        case .like(let post): //this is where we configure the post 
+        case .like(let post): //this is where we configure the post image
             let thumbnail = post.thumbnailImage
             postButton.sd_setBackgroundImage(with: thumbnail, for: .normal, completed: nil)
             
@@ -93,11 +94,12 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         profileImageView.layer.cornerRadius = profileImageView.height/2
         
         let size = contentView.height - 4
-        postButton.frame = CGRect(x: contentView.width - size, y: 2, width: size, height: size)
-        
-        label.frame = CGRect(x: profileImageView.right, y: 0,
+        label.frame = CGRect(x: profileImageView.right + 20, y: 0,
                              width: contentView.width - size - profileImageView.width - 6,
                              height: contentView.height)
+        
+        postButton.frame = CGRect(x: contentView.width - size - 10, y: 2, width: size, height: size) // frame of thumbnail
+    
     }
     
     required init?(coder: NSCoder) {

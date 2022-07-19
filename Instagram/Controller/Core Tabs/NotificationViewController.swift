@@ -9,7 +9,7 @@ import UIKit
 
 enum UserNotificationType {
     case like(post: UserPost)
-    case follow
+    case follow(state: FollowState)
 }
 struct UserNotification {
     let type: UserNotificationType
@@ -57,16 +57,17 @@ final class NotificationViewController: UIViewController {
     
     public func fetchNotifications() {
         let post = UserPost(identifier: "", postType: .photo,
-                            thumbnailImage: URL(string: "https://www.google.com")!,
+                            thumbnailImage: URL(string: "Roy3")!,
                             postURL: URL(string: "https://www.google.com")!,
                             caption: "", likeCount: [],
                             comments: [], createdDate: Date(), taggedUser: [])
         
         for user in 0...100 {
-            let model = UserNotification(type: user % 2 == 0 ? .like(post: post) : .follow,
+            let model = UserNotification(type: user % 2 == 0 ? .like(post: post) : .follow(state: .not_following),
                                          user: User(username: "Joe_king", bio: "Music Artist",
-                                                    name: (first: "Steve", last: "Joe"), birthday: Date(), profilePhoto: URL(string: "https://www.google.com")!, gender: .male,
-                                                    counts: UserCount(following: 1, followers: 1, posts: 3), joinDate: Date()), text: "Hello World")
+                                                    name: (first: "Steve", last: "Joe"), birthday: Date(), profilePhoto: URL(string: "Roy3")!, gender: .male,
+                                                    counts: UserCount(following: 1, followers: 1, posts: 3), joinDate: Date()), text: user % 2 == 0 ? "alex_riley likes your post" : "Joe_king started following you"
+)
             models.append(model)
         }
     }
