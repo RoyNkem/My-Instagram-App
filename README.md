@@ -73,6 +73,7 @@ This repository is still in development and I will continue to add more features
 
 # Upcoming Features :ocean:
  -  Notifications for comments
+ -  Add Time stamps for notification received
  -  Heart Animation when posts are liked
  -  Caching of Profiles, Images, Etc.
  -  Filters support for images
