@@ -37,10 +37,10 @@
 		30D15DD1286F1D8F0028A7A2 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D15DD0286F1D8F0028A7A2 /* ExploreViewController.swift */; };
 		30D15DD3286F1D980028A7A2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D15DD2286F1D980028A7A2 /* CameraViewController.swift */; };
 		30D15DD5286F1DA70028A7A2 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D15DD4286F1DA70028A7A2 /* NotificationViewController.swift */; };
-		30D366442870E84200813A84 /* InstagramFeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D366432870E84200813A84 /* InstagramFeedTableViewCell.swift */; };
+		30D366442870E84200813A84 /* InstagramFeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D366432870E84200813A84 /* InstagramFeedPostTableViewCell.swift */; };
 		30D366472870EC2600813A84 /* InstagramFeedHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D366462870EC2600813A84 /* InstagramFeedHeaderTableViewCell.swift */; };
 		30D366492870EC7B00813A84 /* InstagramFeedActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D366482870EC7B00813A84 /* InstagramFeedActionsTableViewCell.swift */; };
-		30D3664B2870EC9F00813A84 /* InstagramFeedPostGeneralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D3664A2870EC9F00813A84 /* InstagramFeedPostGeneralTableViewCell.swift */; };
+		30D3664B2870EC9F00813A84 /* InstagramFeedGeneralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D3664A2870EC9F00813A84 /* InstagramFeedGeneralTableViewCell.swift */; };
 		30D67B61287B2541003E5DB5 /* NotificationFollowEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D67B60287B2541003E5DB5 /* NotificationFollowEventTableViewCell.swift */; };
 		30D67B63287B2559003E5DB5 /* NotificationLikeEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D67B62287B2559003E5DB5 /* NotificationLikeEventTableViewCell.swift */; };
 		30E568DF286F3162008C5DCD /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF94CBF09A1BFA96E067B6A8 /* Pods_Instagram.framework */; };
@@ -80,10 +80,10 @@
 		30D15DD0286F1D8F0028A7A2 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		30D15DD2286F1D980028A7A2 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		30D15DD4286F1DA70028A7A2 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		30D366432870E84200813A84 /* InstagramFeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedTableViewCell.swift; sourceTree = "<group>"; };
+		30D366432870E84200813A84 /* InstagramFeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedPostTableViewCell.swift; sourceTree = "<group>"; };
 		30D366462870EC2600813A84 /* InstagramFeedHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		30D366482870EC7B00813A84 /* InstagramFeedActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedActionsTableViewCell.swift; sourceTree = "<group>"; };
-		30D3664A2870EC9F00813A84 /* InstagramFeedPostGeneralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedPostGeneralTableViewCell.swift; sourceTree = "<group>"; };
+		30D3664A2870EC9F00813A84 /* InstagramFeedGeneralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedGeneralTableViewCell.swift; sourceTree = "<group>"; };
 		30D67B60287B2541003E5DB5 /* NotificationFollowEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFollowEventTableViewCell.swift; sourceTree = "<group>"; };
 		30D67B62287B2559003E5DB5 /* NotificationLikeEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLikeEventTableViewCell.swift; sourceTree = "<group>"; };
 		30F47DF228763AC70098931C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
@@ -254,10 +254,10 @@
 		30D366452870EBEE00813A84 /* Home Feed & Post */ = {
 			isa = PBXGroup;
 			children = (
-				30D366432870E84200813A84 /* InstagramFeedTableViewCell.swift */,
+				30D366432870E84200813A84 /* InstagramFeedPostTableViewCell.swift */,
 				30D366462870EC2600813A84 /* InstagramFeedHeaderTableViewCell.swift */,
 				30D366482870EC7B00813A84 /* InstagramFeedActionsTableViewCell.swift */,
-				30D3664A2870EC9F00813A84 /* InstagramFeedPostGeneralTableViewCell.swift */,
+				30D3664A2870EC9F00813A84 /* InstagramFeedGeneralTableViewCell.swift */,
 			);
 			path = "Home Feed & Post";
 			sourceTree = "<group>";
@@ -412,7 +412,7 @@
 				30D15DB6286F1C9A0028A7A2 /* AppDelegate.swift in Sources */,
 				305E869A286F3EF5000E2C5C /* StorageManager.swift in Sources */,
 				30D15DD1286F1D8F0028A7A2 /* ExploreViewController.swift in Sources */,
-				30D3664B2870EC9F00813A84 /* InstagramFeedPostGeneralTableViewCell.swift in Sources */,
+				30D3664B2870EC9F00813A84 /* InstagramFeedGeneralTableViewCell.swift in Sources */,
 				30C69F29286F1EB90018A46B /* SearchResultsViewController.swift in Sources */,
 				30C69F1A286F1E540018A46B /* HomeViewController.swift in Sources */,
 				30D366492870EC7B00813A84 /* InstagramFeedActionsTableViewCell.swift in Sources */,
@@ -429,7 +429,7 @@
 				30D67B63287B2559003E5DB5 /* NotificationLikeEventTableViewCell.swift in Sources */,
 				305E869C286F3F03000E2C5C /* DatabaseManager.swift in Sources */,
 				3055D17A286F49A000B48F20 /* Extension.swift in Sources */,
-				30D366442870E84200813A84 /* InstagramFeedTableViewCell.swift in Sources */,
+				30D366442870E84200813A84 /* InstagramFeedPostTableViewCell.swift in Sources */,
 				30C69F2B286F276B0018A46B /* LoginViewController.swift in Sources */,
 				30D15DD3286F1D980028A7A2 /* CameraViewController.swift in Sources */,
 				30C69F25286F1E9E0018A46B /* ListViewController.swift in Sources */,

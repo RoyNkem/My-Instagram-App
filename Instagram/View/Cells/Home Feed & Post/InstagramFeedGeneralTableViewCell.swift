@@ -1,5 +1,5 @@
 //
-//  InstagramFeedTableViewCell.swift
+//  InstagramFeedGeneralTableViewCell.swift
 //  Instagram
 //
 //  Created by Roy Aiyetin on 02/07/2022.
@@ -7,12 +7,13 @@
 
 import UIKit
 
-class InstagramFeedTableViewCell: UITableViewCell {
+class InstagramFeedGeneralTableViewCell: UITableViewCell {
 
-    static let identifier = "InstagramFeedTableViewCell"
+    static let identifier = "InstagramFeedGeneralTableViewCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .systemOrange
     }
     
     required init?(coder: NSCoder) {
