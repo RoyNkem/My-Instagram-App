@@ -8,16 +8,44 @@
 import UIKit
 
 class PostViewController: UIViewController {
-
+/*
+ 
+ Section
+ - Header model: Username, location & Drop down button
+ Section
+ - Post cell model: The picture or video
+ Section
+ - Action buttons cell model: Like, Share
+ Section
+ - n number of general cells for model
+ 
+ */
+    
+    // model for our post sample
+    /// States of a rendered cell
+    enum PostRenderType {
+        case header(provider: User)
+        case primaryContent(provider: UserPost) // post
+        case actions(provider: String) // like, share, comment
+        case comments(comments: [PostComment])
+    }
+    
+    struct PostRenderViewModel {
+        let renderType: PostRenderType
+    }
     private var model: UserPost?
     
     private let tableView: UITableView = {
        
         let tableView = UITableView()
+        tableView.register(InstagramFeedTableViewCell.self, forCellReuseIdentifier: InstagramFeedTableViewCell.identifier)
+        tableView.register(InstagramFeedHeaderTableViewCell.self, forCellReuseIdentifier: InstagramFeedHeaderTableViewCell.identifier)
+        tableView.register(InstagramFeedActionsTableViewCell.self, forCellReuseIdentifier: InstagramFeedActionsTableViewCell.identifier)
+        tableView.register(InstagramFeedPostGeneralTableViewCell.self, forCellReuseIdentifier: InstagramFeedPostGeneralTableViewCell.identifier)
         return tableView
     }()
     
-    init(model: UserPost?) {
+    init(model: UserPost?) { // initialize the PostViewController with a userpost model
         self.model = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,6 +54,7 @@ class PostViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+//MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
 

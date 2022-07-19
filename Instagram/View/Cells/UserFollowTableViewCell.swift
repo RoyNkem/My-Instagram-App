@@ -60,7 +60,7 @@ final class UserFollowTableViewCell: UITableViewCell {
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 4
         button.setTitle("Follow", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         return button
     }()
     

@@ -23,9 +23,10 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     //MARK: - Declare UI Elements
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Roy3")
+//        imageView.image = UIImage(named: "Roy3")
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 4
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.secondaryLabel.cgColor
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -33,7 +34,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "Joe_king liked your photo"
+//        label.text = "Joe_king liked your photo"
         label.font = .systemFont(ofSize: 13, weight: .light)
         label.numberOfLines = 0
         return label
@@ -52,6 +53,8 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         addSubviews(profileImageView, label, postButton)
         
         postButton.addTarget(self, action: #selector(didTapPostButton), for: .touchUpInside)
+        
+        selectionStyle = .none
     }
     
     @objc func didTapPostButton() {
@@ -89,11 +92,11 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let photoWidth = contentView.height - 6
-        profileImageView.frame = CGRect(x: 3, y: 3, width: photoWidth, height: photoWidth)
+        let photoWidth = contentView.height - 15
+        profileImageView.frame = CGRect(x: 5, y: 7.5, width: photoWidth, height: photoWidth)
         profileImageView.layer.cornerRadius = profileImageView.height/2
         
-        let size = contentView.height - 4
+        let size = contentView.height - 15
         label.frame = CGRect(x: profileImageView.right + 20, y: 0,
                              width: contentView.width - size - profileImageView.width - 6,
                              height: contentView.height)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InstagramFeedGeneralTableViewCell: UITableViewCell {
+class InstagramFeedPostGeneralTableViewCell: UITableViewCell {
 
     static let identifier = "InstagramFeedGeneralTableViewCell"
     

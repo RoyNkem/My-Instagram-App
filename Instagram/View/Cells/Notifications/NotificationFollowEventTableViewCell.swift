@@ -41,7 +41,7 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
     
     private let followButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 4
         return button
@@ -55,6 +55,8 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
         addSubviews(profileImageView, label, followButton)
         
         followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
+        
+        selectionStyle = .none
     }
     
     @objc func didTapFollowButton() {
@@ -106,18 +108,17 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let photoWidth = contentView.height - 6
-        profileImageView.frame = CGRect(x: 3, y: 3, width: photoWidth, height: photoWidth)
+        let photoWidth = contentView.height - 15
+        profileImageView.frame = CGRect(x: 5, y: 7.5, width: photoWidth, height: photoWidth)
         profileImageView.layer.cornerRadius = profileImageView.height/2
         
         let size = contentView.height - 5
-        
         label.frame = CGRect(x: profileImageView.right + 20, y: 0,
                              width: contentView.width - size - profileImageView.width - 6,
                              height: contentView.height)
         
         let buttonHeight: CGFloat = contentView.height/2
-        followButton.frame = CGRect(x: contentView.width - size - 30, y: buttonHeight/2, width: size + 20, height: buttonHeight)
+        followButton.frame = CGRect(x: contentView.width - size - 20, y: buttonHeight/2, width: size + 10, height: buttonHeight)
     }
     
     required init?(coder: NSCoder) {

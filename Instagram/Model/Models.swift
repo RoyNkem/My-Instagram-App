@@ -18,6 +18,7 @@ public struct UserPost {
     let comments: [PostComment]
     let createdDate: Date
     let taggedUser: [String]
+    let owner: User
 }
 
 enum Gender {
@@ -59,8 +60,9 @@ struct PostLike {
     let postIdentifier: String
 }
 
-public enum UserPostType {
-    case photo, video
+public enum UserPostType: String {
+    case photo = "Photo"
+    case video = "Video"
 }
 
 public enum IGStorageManagerError: Error {

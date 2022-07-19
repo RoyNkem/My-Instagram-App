@@ -33,7 +33,7 @@ final class SettingsViewController: UIViewController {
         return searchBar
     }()
     
-    private var data = [[SettingsCellModel]]()
+    private var data = [[SettingsCellModel]]() // multidimensional array because we have several sections (with several rows)
     
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
@@ -64,7 +64,7 @@ final class SettingsViewController: UIViewController {
     private func configureModels() {
         
         // setup tableview grouped sections
-        let sectionOne = [
+        let sectionOne = [// individual rows
             SettingsCellModel(title: "Edit Profile") { [weak self] in
                 self?.didTapEditProfile()},
             SettingsCellModel(title: "Follow and invite friends") { [weak self] in
@@ -138,7 +138,7 @@ final class SettingsViewController: UIViewController {
         }
         
         let vc = SFSafariViewController(url: url)
-        present(vc, animated: true)
+        present(vc, animated: true) // move to new web view depending on url passed
     }
     
     //MARK: - Tap Add Account
@@ -231,23 +231,19 @@ extension SettingsViewController: UISearchBarDelegate {
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     //datasource methods
     func numberOfSections(in tableView: UITableView) -> Int {
-        //        print("section: \(data.count)")
         return data.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        print("logout row: \(data[section].count)")
         return data[section].count
     }
     
     //delegate methods
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        //        cell.textLabel?.text = data[indexPath.section][indexPath.row].title
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = data[indexPath.section][indexPath.row].title
-        cell.accessoryType = .disclosureIndicator
+        cell.accessoryType = .disclosureIndicator // right chevron icon used to show that tapping the button presents a view
         return cell
     }
     
