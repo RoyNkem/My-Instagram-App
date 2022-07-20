@@ -31,6 +31,7 @@ struct UserCount {
     let posts: Int
 }
 
+///Represent a user
 struct User {
     let username: String
     let bio: String
@@ -42,6 +43,7 @@ struct User {
     let joinDate: Date
 }
 
+///Represent a user comment
 struct PostComment {
     let identifier: String
     let username: String

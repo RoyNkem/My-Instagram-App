@@ -33,7 +33,6 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .label
-//        label.text = "Joe_king started following you"
         label.font = .systemFont(ofSize: 13, weight: .light)
         label.numberOfLines = 0
         return label
@@ -74,7 +73,7 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
             break
             
         case .follow(let state):
-            //configure button
+            //configure button style
             switch state {
             case .following:
                 followButton.setTitle("Unfollow", for: .normal)
@@ -89,7 +88,7 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
                 followButton.backgroundColor = .link
 
             }
-            
+            // populate UI elements with model
             label.text = model.text
             profileImageView.sd_setImage(with: model.user.profilePhoto, completed: nil)
         }

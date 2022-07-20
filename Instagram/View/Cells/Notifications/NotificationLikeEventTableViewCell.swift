@@ -75,6 +75,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
             break
         }
         
+        // populate UI elements with model
         label.text = model.text
         profileImageView.sd_setImage(with: model.user.profilePhoto)
     }
