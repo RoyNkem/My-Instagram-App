@@ -53,7 +53,10 @@ final class NotificationViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         fetchNotifications()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.backgroundColor = UIColor.clear
     }
     
     //MARK: - Fetch Notifications

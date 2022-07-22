@@ -141,10 +141,10 @@ class RegistrationViewController: UIViewController {
             //register the new user on button tap
             AuthManager.shared.registerNewUser(username: username, email: email, password: password) { registered in
                 DispatchQueue.main.async {
-                    if registered {
+                    if  password.count >= 8 && registered {
                         // good to go
                     }
-                    else if !email.isEmpty && !password.isEmpty && !username.isEmpty {
+                    else if !email.isEmpty && !password.isEmpty && password.count >= 8 && !username.isEmpty {
                         let alert = UIAlertController(title: "Registration Error", message: "Unable to register at the moment", preferredStyle: .alert)
                         let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
                         
