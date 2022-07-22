@@ -106,7 +106,7 @@ class RegistrationViewController: UIViewController {
         signupButton.frame = CGRect(x: 30, y: passwordField.bottom + 45, width: view.width - 60, height: 52)
     }
     
-    //MARK: - BUTTON SELECTOR
+    //MARK: - TAP Signup Button
     @objc func didTapSignupButton(_ sender: UIButton) {
         
         sender.showAnimation{
@@ -127,15 +127,47 @@ class RegistrationViewController: UIViewController {
             
             //textfield animation conditions
             if email.isEmpty && password.isEmpty && username.isEmpty {
-                self.emailField.animateInvalidLogin()
+                self.emailField.animateInvalidLogin() //shake animation
                 self.passwordField.animateInvalidLogin()
                 self.usernameField.animateInvalidLogin()
+                
+                self.usernameField.layer.borderColor = UIColor.red.cgColor //red warning
+                self.usernameField.layer.borderWidth = 1
+                
+                self.emailField.layer.borderColor = UIColor.red.cgColor
+                self.emailField.layer.borderWidth = 1
+                
+                self.passwordField.layer.borderColor = UIColor.red.cgColor
+                self.passwordField.layer.borderWidth = 1
+                
             } else if email.isEmpty {
                 self.emailField.animateInvalidLogin()
+                self.emailField.layer.borderColor = UIColor.red.cgColor
+                self.emailField.layer.borderWidth = 1
+                
+                self.usernameField.layer.borderColor = UIColor.clear.cgColor
+                self.passwordField.layer.borderColor = UIColor.clear.cgColor
+
             } else if password.isEmpty || password.count < 8 {
                 self.passwordField.animateInvalidLogin()
+                self.passwordField.layer.borderColor = UIColor.red.cgColor
+                self.passwordField.layer.borderWidth = 1
+                
+                self.usernameField.layer.borderColor = UIColor.clear.cgColor
+                self.emailField.layer.borderColor = UIColor.clear.cgColor
+                
             } else if username.isEmpty {
                 self.usernameField.animateInvalidLogin()
+                self.usernameField.layer.borderColor = UIColor.red.cgColor
+                self.usernameField.layer.borderWidth = 1
+                
+                self.emailField.layer.borderColor = UIColor.clear.cgColor
+                self.passwordField.layer.borderColor = UIColor.clear.cgColor
+                
+            } else {
+                self.usernameField.layer.borderColor = UIColor.clear.cgColor
+                self.emailField.layer.borderColor = UIColor.clear.cgColor
+                self.passwordField.layer.borderColor = UIColor.clear.cgColor
             }
             
             //register the new user on button tap

@@ -125,6 +125,21 @@ class LoginViewController: UIViewController {
         termsButton.addTarget(self, action: #selector(didTapTermsButton), for: .touchUpInside)
         
         privacyButton.addTarget(self, action: #selector(didTapPrivacyButton), for: .touchUpInside)
+        
+//        //Textfield
+//        usernameEmailField.addTarget(self, action: #selector(LoginViewController.textFieldDidChange(_:)), for: .editingChanged)
+//        passwordField.addTarget(self, action: #selector(LoginViewController.textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if (textField.text!.isEmpty) {
+            // change textfield border color
+            usernameEmailField.layer.borderColor = UIColor.red.cgColor
+            passwordField.layer.borderColor = UIColor.red.cgColor
+        } else {
+            // remove text field border or change color
+            return
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -170,7 +185,7 @@ class LoginViewController: UIViewController {
         
     }
     
-    // MARK: - Login Button
+    // MARK: - TAP Login Button
     @objc private func didTapLoginButton(_ sender: UIButton) {
        
         //login functionality
@@ -194,13 +209,33 @@ class LoginViewController: UIViewController {
         }
         
         //textfield animation conditions
-        if usernameEmail.isEmpty && password.isEmpty && password.count < 8 {
-            usernameEmailField.animateInvalidLogin()
+        if usernameEmail.isEmpty && password.isEmpty {
+            usernameEmailField.animateInvalidLogin() //shake animations
             passwordField.animateInvalidLogin()
+            
+            usernameEmailField.layer.borderColor = UIColor.red.cgColor //red warning
+            usernameEmailField.layer.borderWidth = 1
+            
+            passwordField.layer.borderColor = UIColor.red.cgColor
+            passwordField.layer.borderWidth = 1
+            
         } else if usernameEmail.isEmpty {
             usernameEmailField.animateInvalidLogin()
+            usernameEmailField.layer.borderColor = UIColor.red.cgColor
+            usernameEmailField.layer.borderWidth = 1
+            
+            passwordField.layer.borderColor = UIColor.clear.cgColor
+
         } else if password.isEmpty || password.count < 8 {
             passwordField.animateInvalidLogin()
+            passwordField.layer.borderColor = UIColor.red.cgColor
+            passwordField.layer.borderWidth = 1
+            
+            usernameEmailField.layer.borderColor = UIColor.clear.cgColor
+
+        } else {
+            usernameEmailField.layer.borderColor = UIColor.clear.cgColor
+            passwordField.layer.borderColor = UIColor.clear.cgColor
         }
         
         // check if username or email entered
