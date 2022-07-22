@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
     }
     
     private func configueHeaderView() {
-        //check that HeaderViewonly has one subview i.e backgroundImage
+        //check that HeaderView only has one subview i.e backgroundImage
         guard headerView.subviews.count == 1 else {
             return
         }
@@ -172,6 +172,10 @@ class LoginViewController: UIViewController {
     
     // MARK: - Login Button
     @objc private func didTapLoginButton(_ sender: UIButton) {
+       
+        //login functionality
+        var username: String?
+        var email: String?
         
         sender.showAnimation {// animate button tap
             
@@ -184,17 +188,20 @@ class LoginViewController: UIViewController {
         }
         
         // check that email and password field are entered
-        guard let usernameEmail = self.usernameEmailField.text, !usernameEmail.isEmpty,
-              let password = self.passwordField.text, !password.isEmpty, password.count >= 8
-        else {
-            usernameEmailField.animateInvalidLogin()
-            passwordField.animateInvalidLogin()
+        guard let usernameEmail = self.usernameEmailField.text,
+              let password = self.passwordField.text else {
             return
         }
         
-        //login functionality
-        var username: String?
-        var email: String?
+        //textfield animation conditions
+        if usernameEmail.isEmpty && password.isEmpty && password.count < 8 {
+            usernameEmailField.animateInvalidLogin()
+            passwordField.animateInvalidLogin()
+        } else if usernameEmail.isEmpty {
+            usernameEmailField.animateInvalidLogin()
+        } else if password.isEmpty || password.count < 8 {
+            passwordField.animateInvalidLogin()
+        }
         
         // check if username or email entered
         if usernameEmail.contains("@"), usernameEmail.contains(".") {
@@ -213,7 +220,7 @@ class LoginViewController: UIViewController {
                     self.dismiss(animated: true, completion: nil)
                     
                 }
-                else {
+                else if !usernameEmail.isEmpty && !password.isEmpty && password.count >= 8 {
                     // error logging in
                     let alert = UIAlertController(title: "Login Error", message: "Unable to log in", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)

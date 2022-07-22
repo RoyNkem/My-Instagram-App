@@ -118,12 +118,25 @@ class RegistrationViewController: UIViewController {
             self.passwordField.resignFirstResponder()
             self.emailField.resignFirstResponder()
             
-            // check that field are not empty
-            guard let email = self.emailField.text, !email.isEmpty,
-                  let password = self.passwordField.text, !password.isEmpty, password.count >= 8,
-                  let username = self.usernameField.text, !username.isEmpty else {
-                      return
-                  }
+            guard let email = self.emailField.text,
+                  let password = self.passwordField.text,
+                  let username = self.usernameField.text
+            else {
+                return
+            }
+            
+            //textfield animation conditions
+            if email.isEmpty && password.isEmpty && username.isEmpty {
+                self.emailField.animateInvalidLogin()
+                self.passwordField.animateInvalidLogin()
+                self.usernameField.animateInvalidLogin()
+            } else if email.isEmpty {
+                self.emailField.animateInvalidLogin()
+            } else if password.isEmpty || password.count < 8 {
+                self.passwordField.animateInvalidLogin()
+            } else if username.isEmpty {
+                self.usernameField.animateInvalidLogin()
+            }
             
             //register the new user on button tap
             AuthManager.shared.registerNewUser(username: username, email: email, password: password) { registered in
@@ -131,12 +144,12 @@ class RegistrationViewController: UIViewController {
                     if registered {
                         // good to go
                     }
-                    else {
-                        //                    let alert = UIAlertController(title: "Registration Error", message: "Unable to register user", preferredStyle: .alert)
-                        //                    let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-                        //
-                        //                    alert.addAction(action)
-                        //                    self.present(alert, animated: true)
+                    else if !email.isEmpty && !password.isEmpty && !username.isEmpty {
+                        let alert = UIAlertController(title: "Registration Error", message: "Unable to register at the moment", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+                        
+                        alert.addAction(action)
+                        self.present(alert, animated: true)
                     }
                 }
             }

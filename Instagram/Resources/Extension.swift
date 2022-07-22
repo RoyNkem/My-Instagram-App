@@ -62,9 +62,8 @@ extension UIView {
     }
 
     //MARK: - Shake TextField
-    //Shake Textfield when user enters incorrect details
+    //Shake Textfield when user enters incorrect details or empty textfield
     public func animateInvalidLogin() {
-//        isUserInteractionEnabled = false
         
         //option 1 Arcade Code Youtube
 //        let animation = CAKeyframeAnimation() //animation type

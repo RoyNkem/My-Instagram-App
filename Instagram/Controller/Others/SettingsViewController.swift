@@ -25,12 +25,6 @@ final class SettingsViewController: UIViewController {
     }()
     
     private let searchBar = UISearchBar()
-//    private let searchBar: UISearchBar = {
-//
-//        let searchBar = UISearchBar()
-//        searchBar.placeholder = "Search"
-//        return searchBar
-//    }()
     
     private var data = [[SettingsCellModel]]() // multidimensional array because we have several sections (with several rows)
     
@@ -46,9 +40,9 @@ final class SettingsViewController: UIViewController {
         tableView.dataSource = self
         tableView.tableHeaderView = searchBarView()
         view.addSubviews(tableView)
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none // remove lines from row cells
         
         view.backgroundColor = .systemBackground
-        
     }
     
     private func searchBarView() -> UIView {
@@ -64,8 +58,6 @@ final class SettingsViewController: UIViewController {
 //MARK: - VIEW DID LAYOUT SUBVIEW
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
         tableView.frame = view.bounds
     }
@@ -146,7 +138,7 @@ final class SettingsViewController: UIViewController {
         }
         
         let vc = SFSafariViewController(url: url)
-        present(vc, animated: true) // move to new web view depending on url passed
+        present(vc, animated: true) // move to new safari webview depending on url passed
     }
     
     //MARK: - Tap Add Account
@@ -177,7 +169,6 @@ final class SettingsViewController: UIViewController {
         alert.addAction(actionLogin)
         alert.addAction(actionCreateAccount)
         alert.addAction(cancel)
-        //        alert.view.layer.cornerRadius = 40
         
         present(alert, animated: true) {
             alert.view.superview?.isUserInteractionEnabled = true // allow touch event outside alertVC to dismiss alert
