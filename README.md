@@ -90,7 +90,7 @@ This repository is still in development and I will continue to add more features
 ## Contributing & Issues :computer:
 1. Fork the the project
 2. Create your feature branch (git checkout -b my-new-feature)
-3. Make required changes and commit (git commit -am 'Add some feature')
+3. Make required changes and commit (git commit - m 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
 5. Create new Pull Request
 6. You can open an issue for support or suggestions
