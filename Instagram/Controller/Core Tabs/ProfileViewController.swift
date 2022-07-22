@@ -83,7 +83,7 @@ final class ProfileViewController: UIViewController {
 
 //MARK: - EXTENSION
 
-extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfileTabsCollectionReusableViewDelegate, ProfileInfoHeaderCollectionReusableViewDelegate {
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     //MARK: - Collection View
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2 // section 0 & section 1
@@ -148,8 +148,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         // section tabs height
         return CGSize(width: collectionView.width, height: 50)
     }
+}
+
+//MARK: - Profile Tab View Delegate
+extension ProfileViewController: ProfileTabsCollectionReusableViewDelegate, ProfileInfoHeaderCollectionReusableViewDelegate {
     
-    //MARK: - Profile Tab View Delegate
     func didTapGridButtonTab(_ header: ProfileTabsCollectionReusableView) {
         //reload collection view with data
     }
@@ -169,10 +172,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         let navVC = UINavigationController(rootViewController: vc)
         present(navVC, animated: true, completion: nil)
     }
+    
     func profileHeaderDidTapPostButton(_ header: ProfileInfoHeaderCollectionReusableView) {
         //scroll to posts in collection view cells
         collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
     }
+    
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoHeaderCollectionReusableView) {
         
         var mockData = [UserRelationship]()
@@ -184,6 +189,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
+    
     func profileHeaderDidTapFollowingButton(_ header: ProfileInfoHeaderCollectionReusableView) {
         
         var mockData = [UserRelationship]()

@@ -42,6 +42,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     
     private let postButton: UIButton = {
         let button = UIButton()
+        button.backgroundColor = .red
         return button
     }()
     
@@ -62,6 +63,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         delegate?.didTapRelatedPostButton(model: model)
     }
     
+    //MARK: - Configure Model
     public func configure(with model: UserNotification) {
         self.model = model
         
@@ -69,6 +71,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
             
         case .like(let post): //this is where we configure the post image
             let thumbnail = post.thumbnailImage
+            guard !thumbnail.absoluteString.contains("google.com") else { return } // To sample post
             postButton.sd_setBackgroundImage(with: thumbnail, for: .normal, completed: nil)
             
         case .follow:
@@ -90,19 +93,20 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
         postButton.layer.borderWidth = 0
     }
     
+    //MARK: - Layout Views
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let photoWidth = contentView.height - 15
-        profileImageView.frame = CGRect(x: 5, y: 7.5, width: photoWidth, height: photoWidth)
+        let photoWidth = contentView.height - 20
+        profileImageView.frame = CGRect(x: 10, y: 10, width: photoWidth, height: photoWidth)
         profileImageView.layer.cornerRadius = profileImageView.height/2
         
-        let size = contentView.height - 15
-        label.frame = CGRect(x: profileImageView.right + 20, y: 0,
+        let size = contentView.height - 12
+        label.frame = CGRect(x: profileImageView.right + 15, y: 0,
                              width: contentView.width - size - profileImageView.width - 6,
                              height: contentView.height)
         
-        postButton.frame = CGRect(x: contentView.width - size - 10, y: 2, width: size, height: size) // frame of thumbnail
+        postButton.frame = CGRect(x: contentView.width - size - 10, y: 6, width: size, height: size) // frame of thumbnail
     
     }
     

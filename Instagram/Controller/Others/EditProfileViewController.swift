@@ -30,8 +30,6 @@ class EditProfileViewController: UIViewController {
         
         configureModels()
         
-        
-        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -44,6 +42,24 @@ class EditProfileViewController: UIViewController {
         
         view.addSubviews(tableView)
     }
+    
+    //MARK: - TableView Header
+    func createTableHeaderView() -> UIView {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: view.height/4).integral)
+        
+        let size = header.height/1.5
+        let profilePhotoButton = UIButton(frame: CGRect(x: (view.width - size)/2, y: (header.height - size)/2, width: size, height: size))
+        profilePhotoButton.setBackgroundImage(UIImage(systemName: "person.circle"), for: .normal)
+        profilePhotoButton.layer.masksToBounds = true
+        profilePhotoButton.layer.cornerRadius = size/2
+        profilePhotoButton.layer.borderWidth = 1
+        profilePhotoButton.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        profilePhotoButton.addTarget(self, action: #selector(didTapProfilePhotoButton), for: .touchUpInside)
+        
+        header.addSubview(profilePhotoButton)
+        return header
+    }
+    
     
     //MARK: - Set up Table Sections data
     private func configureModels() {
@@ -71,22 +87,6 @@ class EditProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         tableView.frame = view.bounds
-    }
-    
-    func createTableHeaderView() -> UIView {
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: view.height/4).integral)
-        
-        let size = header.height/1.5
-        let profilePhotoButton = UIButton(frame: CGRect(x: (view.width - size)/2, y: (header.height - size)/2, width: size, height: size))
-        profilePhotoButton.setBackgroundImage(UIImage(systemName: "person.circle"), for: .normal)
-        profilePhotoButton.layer.masksToBounds = true
-        profilePhotoButton.layer.cornerRadius = size/2
-        profilePhotoButton.layer.borderWidth = 1
-        profilePhotoButton.layer.borderColor = UIColor.secondarySystemBackground.cgColor
-        profilePhotoButton.addTarget(self, action: #selector(didTapProfilePhotoButton), for: .touchUpInside)
-        
-        header.addSubview(profilePhotoButton)
-        return header
     }
     
     @objc private func didTapProfilePhotoButton() {

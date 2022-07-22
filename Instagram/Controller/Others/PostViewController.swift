@@ -40,6 +40,13 @@ class PostViewController: UIViewController {
     
     private var renderModels = [PostRenderViewModel]() //each model/section has one property: renderType
     
+    // initialize the PostViewController with a userpost model
+    init(model: UserPost?) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+        configureModels()
+    }
+    
     //MARK: - Defining TableView cells
     private let tableView: UITableView = {
         
@@ -51,15 +58,9 @@ class PostViewController: UIViewController {
         return tableView
     }()
     
-    init(model: UserPost?) { // initialize the PostViewController with a userpost model
-        self.model = model
-        super.init(nibName: nil, bundle: nil)
-        configureModels()
-    }
-    
     //MARK: - Model Configure data
     private func configureModels() {
-        guard let userPostModel = self.model else { return }
+        guard let userPostModel = self.model else { return } //grab the model that came in from initializer of PostVC
         
         //Header
         renderModels.append(PostRenderViewModel(renderType: .header(provider: userPostModel.owner)))
@@ -73,8 +74,7 @@ class PostViewController: UIViewController {
         //4 Comments
         var comments = [PostComment]()
         for i in 0..<4 {
-            comments.append(PostComment(identifier: "123_\(i)", username: "adam_link", text: "Great Post", createdDate: Date(), likes: []
-                                       )
+            comments.append(PostComment(identifier: "123_\(i)", username: "adam_link", text: "Great Post", createdDate: Date(), likes: [])
             )
         }
         renderModels.append(PostRenderViewModel(renderType: .comments(comments: comments)))
@@ -87,9 +87,7 @@ class PostViewController: UIViewController {
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureModels()
-        
+                
         view.addSubviews(tableView)
         
         tableView.delegate = self
@@ -99,7 +97,6 @@ class PostViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         tableView.frame = view.bounds
     }
 }
@@ -123,8 +120,9 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    //MARK: - TableView Cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = renderModels[indexPath.section]
+        let model = renderModels[indexPath.section] // we can switch renderType based on the section
         
         switch model.renderType {
         case .actions(let actions):
@@ -150,6 +148,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    //MARK: - Height For Row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let model = renderModels[indexPath.section]
         

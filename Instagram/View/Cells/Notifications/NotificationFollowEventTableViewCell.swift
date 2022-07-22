@@ -65,8 +65,9 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
         delegate?.didTapFollowUnfollowButton(model: model)
     }
     
+    //MARK: - Configure Model
     public func configure(with model: UserNotification) {
-        self.model = model
+        self.model = model //assign the parameter passed from Notifications VC to the model in the cell
         
         switch model.type {
         case .like(_):
@@ -79,7 +80,7 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
                 followButton.setTitle("Unfollow", for: .normal)
                 followButton.setTitleColor(.label, for: .normal)
                 followButton.layer.borderWidth = 1
-                followButton.layer.borderColor = UIColor.systemBackground.cgColor
+                followButton.layer.borderColor = UIColor.secondarySystemBackground.cgColor
                 
             case .not_following:
                 followButton.setTitle("Follow", for: .normal)
@@ -104,20 +105,21 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
         followButton.layer.borderWidth = 0
     }
     
+    //MARK: - Layout Views
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let photoWidth = contentView.height - 15
-        profileImageView.frame = CGRect(x: 5, y: 7.5, width: photoWidth, height: photoWidth)
+        let photoWidth = contentView.height - 20
+        profileImageView.frame = CGRect(x: 10, y: 10, width: photoWidth, height: photoWidth)
         profileImageView.layer.cornerRadius = profileImageView.height/2
         
-        let size = contentView.height - 5
-        label.frame = CGRect(x: profileImageView.right + 20, y: 0,
+        let size = contentView.height - 3
+        label.frame = CGRect(x: profileImageView.right + 15, y: 0,
                              width: contentView.width - size - profileImageView.width - 6,
                              height: contentView.height)
         
         let buttonHeight: CGFloat = contentView.height/2
-        followButton.frame = CGRect(x: contentView.width - size - 20, y: buttonHeight/2, width: size + 10, height: buttonHeight)
+        followButton.frame = CGRect(x: contentView.width - size - 12, y: buttonHeight/2, width: size + 6, height: buttonHeight)
     }
     
     required init?(coder: NSCoder) {

@@ -11,8 +11,9 @@ enum UserNotificationType {
     case like(post: UserPost)
     case follow(state: FollowState)
 }
+
 struct UserNotification {
-    let type: UserNotificationType
+    let type: UserNotificationType //type of notification received
     let user: User
     let text: String
 }
@@ -55,6 +56,7 @@ final class NotificationViewController: UIViewController {
         
     }
     
+    //MARK: - Fetch Notifications
     public func fetchNotifications() {
         
         for x in 0...100 {
@@ -122,7 +124,6 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
             cell.delegate = self
             return cell
         }
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -146,6 +147,7 @@ extension NotificationViewController: NotificationLikeEventTableViewCellDelegate
     func didTapRelatedPostButton(model: UserNotification) {
         switch model.type {
         case .like(let post):
+            //open post. Get into delegation
             let vc = PostViewController(model: nil)
             vc.navigationItem.title = post.postType.rawValue
             vc.navigationItem.largeTitleDisplayMode = .never
@@ -154,7 +156,5 @@ extension NotificationViewController: NotificationLikeEventTableViewCellDelegate
         case .follow(_):
             fatalError("Dev issue: should never get called")
         }
-        //open post
     }
-    
 }

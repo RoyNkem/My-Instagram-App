@@ -31,14 +31,15 @@ extension UIView {
         return left + width
     }
     
-    //MARK: - iterate array of views in variadic parameter and adding individual subviews
+    //MARK: - Add Subviews
+    //iterate array of views in variadic parameter and adding individual subviews
     public func addSubviews(_ views: UIView...) {
         for view in views {
             addSubview(view)
         }
     }
     
-    //MARK: - animate button after tap
+    //MARK: - Animate button after tap
     public func showAnimation(_ completionBlock: @escaping () -> Void) {
         //During animation, user interactions are temporarily disabled for all views involved in the animation
         isUserInteractionEnabled = false //ignore user interactions (touch, press)
@@ -58,6 +59,29 @@ extension UIView {
                 completionBlock()
             }
         }
+    }
+
+    //MARK: - Shake TextField
+    //Shake Textfield when user enters incorrect details
+    public func animateInvalidLogin() {
+//        isUserInteractionEnabled = false
+        
+        //option 1 Arcade Code Youtube
+//        let animation = CAKeyframeAnimation() //animation type
+//        animation.keyPath = "position.x" //static identifier for specific animation type
+//        animation.values = [0, 10, -10, 10, 0] // positions of x coord. when content shakes
+//        animation.keyTimes = [0, 0.16, 0.5, 0.83, 1] // animation timing
+//        animation.duration = 0.5
+//        animation.isAdditive = true
+        
+        //option 2
+        let animation = CAKeyframeAnimation()
+        animation.keyPath = "transform.translation.x"
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear) // timing pace of animation
+        animation.duration = 0.6
+        animation.values = [-20, 20, -20, 20, -10, 10, -5, 5, 0]
+        
+        layer.add(animation, forKey: "shake")
     }
 }
 

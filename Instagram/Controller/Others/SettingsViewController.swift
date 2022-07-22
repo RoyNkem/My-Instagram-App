@@ -10,18 +10,16 @@ import SafariServices
 
 struct SettingsCellModel {
     var title: String
-//    var image: String
+    //    var image: String
     var handler: (() -> Void) //closure that takes no argument and returns void
 }
-
 /// ViewController to show user settings
 final class SettingsViewController: UIViewController {
     
     //MARK: - DECLARE Tableview Elements views for Login screen
-    
     private let tableView: UITableView = {
         
-        var tableView = UITableView(frame: .zero, style: .grouped)
+        var tableView = UITableView(frame: .zero, style: .grouped) // grouped sections
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
@@ -35,7 +33,7 @@ final class SettingsViewController: UIViewController {
     
     private var data = [[SettingsCellModel]]() // multidimensional array because we have several sections (with several rows)
     
-    //MARK: - VIEW DID LOAD
+//MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,18 +43,29 @@ final class SettingsViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        view.addSubviews(tableView, searchBar)
+        tableView.tableHeaderView = searchBarView()
+        view.addSubviews(tableView)
         
         view.backgroundColor = .systemBackground
         
     }
     
-    //MARK: - VIEW DID LAYOUT SUBVIEW
+    private func searchBarView() -> UIView {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 50).integral)
+        
+        searchBar.placeholder = "Search..."
+        searchBar.frame = CGRect(x: 0, y: 0, width: view.width, height: 50)
+        header.addSubviews(searchBar)
+        
+        return header
+    }
+    
+//MARK: - VIEW DID LAYOUT SUBVIEW
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        searchBar.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.bounds.width, height: 40)
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
         tableView.frame = view.bounds
     }
     
@@ -93,7 +102,6 @@ final class SettingsViewController: UIViewController {
                 self?.didTapLogout()}
         ]
         data.append(logoutSection)
-        
     }
     
     //MARK: - CELL TAP FUNCTIONS
@@ -106,8 +114,7 @@ final class SettingsViewController: UIViewController {
     }
     
     private func didTapInviteFriends() {
-      // show share sheet to invite friends
-        
+        // show share sheet to invite friends
     }
     
     private func didTapSaveOriginalPhotos() {
@@ -177,7 +184,6 @@ final class SettingsViewController: UIViewController {
         }
     }
     
-    
     //MARK: - Tap Logout
     private func didTapLogout() {
         
@@ -216,7 +222,6 @@ final class SettingsViewController: UIViewController {
             logoutSheet.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
         }
     }
-    
 }
 
 //:MARK: - EXTENSION
@@ -224,7 +229,6 @@ final class SettingsViewController: UIViewController {
 extension SettingsViewController: UISearchBarDelegate {
     
 }
-
 
 //MARK: - TABLEVIEW DELEGATE AND DATASOURCE
 
@@ -250,7 +254,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //handle cell selection
         tableView.deselectRow(at: indexPath, animated: true)
-        let logoutModel = data[indexPath.section][indexPath.row]
-        logoutModel.handler() // call/invoke logout handler during configuration i.e didTapLogout()
+        let selectedCellForRow = data[indexPath.section][indexPath.row]
+        selectedCellForRow.handler() // call/invoke cell handler during configuration i.e didTapLogout()
     }
 }

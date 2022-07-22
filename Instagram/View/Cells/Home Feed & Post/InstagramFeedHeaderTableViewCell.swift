@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InstagramFeedHeaderTableViewCell: UITableViewCell {
+final class InstagramFeedHeaderTableViewCell: UITableViewCell {
 
     static let identifier = "InstagramFeedHeaderTableViewCell"
     
@@ -21,7 +21,11 @@ class InstagramFeedHeaderTableViewCell: UITableViewCell {
     }
     
     public func configure() {
-        
+        //configure cell content
+
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
 }

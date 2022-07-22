@@ -162,20 +162,18 @@ class LoginViewController: UIViewController {
         backgroundView.frame = headerView.bounds
         
         //Add Instagram logo
-        let imageView = UIImageView(image: UIImage(named: "text"))
-        headerView.addSubviews(imageView)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: headerView.width/4, y: view.safeAreaInsets.top, width: headerView.width/2.0,
+        let instagramImage = UIImageView(image: UIImage(named: "text"))
+        headerView.addSubviews(instagramImage)
+        instagramImage.contentMode = .scaleAspectFit
+        instagramImage.frame = CGRect(x: headerView.width/4, y: view.safeAreaInsets.top, width: headerView.width/2.0,
                                  height: headerView.height - view.safeAreaInsets.top)
         
     }
     
-    // MARK: - BUTTON SELECTORS
-    //functions called when buttons are tapped
-    
+    // MARK: - Login Button
     @objc private func didTapLoginButton(_ sender: UIButton) {
         
-        sender.showAnimation {
+        sender.showAnimation {// animate button tap
             
             //use [weak self] in the closure to make reference to class weak
             [weak self] in self?.usernameEmailField.resignFirstResponder()
@@ -187,9 +185,13 @@ class LoginViewController: UIViewController {
         
         // check that email and password field are entered
         guard let usernameEmail = self.usernameEmailField.text, !usernameEmail.isEmpty,
-              let password = self.passwordField.text, !password.isEmpty, password.count >= 8 else {
-                  return
-              }
+              let password = self.passwordField.text, !password.isEmpty, password.count >= 8
+        else {
+            usernameEmailField.animateInvalidLogin()
+            passwordField.animateInvalidLogin()
+            return
+        }
+        
         //login functionality
         var username: String?
         var email: String?
@@ -224,6 +226,8 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Create Account Button
     @objc private func didTapCreateAccountButton() {
         print("Create Account Button tapped")
         
@@ -232,11 +236,13 @@ class LoginViewController: UIViewController {
         present(UINavigationController(rootViewController: vc), animated: true)
     }
     
+    // MARK: - Forgot Password Button
     @objc private func didTapForgotPassword() {
         print("Forgot Password tapped")
         
     }
     
+    // MARK: - Terms Button
     @objc private func didTapTermsButton() {
         
         let urlString = "https://help.instagram.com/581066165581870"
@@ -247,6 +253,7 @@ class LoginViewController: UIViewController {
         present(vc, animated: true)
     }
     
+    // MARK: - Privacy Button
     @objc private func didTapPrivacyButton() {
         
         let urlString = "https://help.instagram.com/519522125107875/?helpref=hc_fnav"

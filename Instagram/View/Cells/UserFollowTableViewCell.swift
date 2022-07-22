@@ -83,7 +83,8 @@ final class UserFollowTableViewCell: UITableViewCell {
         delegate?.didTapFollowUnfollowButton(model: model)
     }
     
-    //Exchange between model data and labels in cell
+    //MARK: - Configure model
+    //Exchange between model data and labels in cell from ListVC
     public func configure(with model: UserRelationship) {
         self.model = model
         
@@ -131,6 +132,7 @@ final class UserFollowTableViewCell: UITableViewCell {
         nameLabel.frame = CGRect(x: profileImageView.right + 10, y: userNameLabel.bottom + 5, width: contentView.width - profileImageView.width - 8 - buttonWidth, height: labelHeight)
         
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
