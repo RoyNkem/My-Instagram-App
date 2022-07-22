@@ -24,12 +24,13 @@ final class SettingsViewController: UIViewController {
         return tableView
     }()
     
-    private let searchBar: UISearchBar = {
-        
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "Search"
-        return searchBar
-    }()
+    private let searchBar = UISearchBar()
+//    private let searchBar: UISearchBar = {
+//
+//        let searchBar = UISearchBar()
+//        searchBar.placeholder = "Search"
+//        return searchBar
+//    }()
     
     private var data = [[SettingsCellModel]]() // multidimensional array because we have several sections (with several rows)
     
