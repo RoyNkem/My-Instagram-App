@@ -125,7 +125,7 @@ class RegistrationViewController: UIViewController {
                 return
             }
             
-            //textfield animation conditions
+            //MARK: - ...textfield animations
             if email.isEmpty && password.isEmpty && username.isEmpty {
                 self.emailField.animateInvalidLogin() //shake animation
                 self.passwordField.animateInvalidLogin()
@@ -148,7 +148,7 @@ class RegistrationViewController: UIViewController {
                 self.usernameField.layer.borderColor = UIColor.clear.cgColor
                 self.passwordField.layer.borderColor = UIColor.clear.cgColor
 
-            } else if password.isEmpty || password.count < 8 {
+            } else if password.isEmpty || password.count < 6 {
                 self.passwordField.animateInvalidLogin()
                 self.passwordField.layer.borderColor = UIColor.red.cgColor
                 self.passwordField.layer.borderWidth = 1
@@ -170,14 +170,14 @@ class RegistrationViewController: UIViewController {
                 self.passwordField.layer.borderColor = UIColor.clear.cgColor
             }
             
-            //register the new user on button tap
+            //MARK: - ...Sign up
             AuthManager.shared.registerNewUser(username: username, email: email, password: password) { registered in
                 DispatchQueue.main.async {
-                    if  password.count >= 8 && registered {
+                    if  password.count >= 6 && registered {
                         // good to go
                     }
                     else if !email.isEmpty && !password.isEmpty && password.count >= 8 && !username.isEmpty {
-                        let alert = UIAlertController(title: "Registration Error", message: "Unable to register at the moment", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Registration Error", message: "Unable to register at the moment. Please try to login", preferredStyle: .alert)
                         let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
                         
                         alert.addAction(action)

@@ -208,7 +208,7 @@ class LoginViewController: UIViewController {
             return
         }
         
-        //textfield animation conditions
+        //MARK: - ...textfield animations
         if usernameEmail.isEmpty && password.isEmpty {
             usernameEmailField.animateInvalidLogin() //shake animations
             passwordField.animateInvalidLogin()
@@ -226,7 +226,7 @@ class LoginViewController: UIViewController {
             
             passwordField.layer.borderColor = UIColor.clear.cgColor
 
-        } else if password.isEmpty || password.count < 8 {
+        } else if password.isEmpty || password.count < 6 {
             passwordField.animateInvalidLogin()
             passwordField.layer.borderColor = UIColor.red.cgColor
             passwordField.layer.borderWidth = 1
@@ -248,14 +248,15 @@ class LoginViewController: UIViewController {
             username = usernameEmail
         }
         
+        //MARK: - ...Login
         AuthManager.shared.loginUser(username: username, email: email, password: password) { success in
             DispatchQueue.main.async {
-                if success {
+                if password.count >= 6 && success {
                     // user logged in
                     self.dismiss(animated: true, completion: nil)
                     
                 }
-                else if !usernameEmail.isEmpty && !password.isEmpty && password.count >= 8 {
+                else if !usernameEmail.isEmpty && !password.isEmpty && password.count >= 6 {
                     // error logging in
                     let alert = UIAlertController(title: "Login Error", message: "Unable to log in", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
