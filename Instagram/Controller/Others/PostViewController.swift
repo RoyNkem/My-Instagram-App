@@ -17,7 +17,7 @@ import UIKit
  - Action buttons cell model: Like, Share
  Section
  - n number of general cells for model
- 
+  
  */
 
 //MARK: - Data Model

@@ -73,9 +73,12 @@ class HomeViewController: UIViewController {
         }
         
         for _ in 0..<5 {
-            let viewModel = HomeFeedRenderViewModel(header: PostRenderViewModel(renderType: .header(provider: user)), post: PostRenderViewModel(renderType: .primaryContent(provider: post)), action: PostRenderViewModel(renderType: .actions(provider: "")), comments: PostRenderViewModel(renderType: .comments(comments: comments)))
+            let viewModel = HomeFeedRenderViewModel(header: PostRenderViewModel(renderType: .header(provider: user)),
+                                                    post: PostRenderViewModel(renderType: .primaryContent(provider: post)),
+                                                    action: PostRenderViewModel(renderType: .actions(provider: "")),
+                                                    comments: PostRenderViewModel(renderType: .comments(comments: comments)))
             
-            feedRenderModels.append(viewModel)
+            feedRenderModels.append(viewModel) // only one section
             
         }
     }
@@ -163,6 +166,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             switch model.header.renderType {
             case .header(let user):
                 let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedHeaderTableViewCell.identifier, for: indexPath) as! InstagramFeedHeaderTableViewCell
+                cell.configure(with: user)
+                cell.delegate = self
                 return cell
                 
             case .comments, .actions, .primaryContent: return UITableViewCell()
@@ -173,6 +178,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             switch model.post.renderType {
             case .primaryContent(let post):
                 let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedPostTableViewCell.identifier, for: indexPath) as! InstagramFeedPostTableViewCell
+                cell.configure(with: post)
                 return cell
                 
             case .comments, .actions, .header: return UITableViewCell()
@@ -183,6 +189,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             switch model.action.renderType {
             case .actions(let provider):
                 let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedActionsTableViewCell.identifier, for: indexPath) as! InstagramFeedActionsTableViewCell
+                cell.configure(with: provider)
+                cell.delegate = self
                 return cell
                 
             case .comments, .header, .primaryContent: return UITableViewCell()
@@ -228,7 +236,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-       //if feedRenderModel.count % 4 == 0 {
         let subsection = section % 4
         if subsection == 3 { // comments subsection
             return 70 // spacing  between posts
@@ -240,5 +247,37 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
+    }
+}
+
+extension HomeViewController: InstagramFeedHeaderTableViewCellDelegate {
+    func didTapMoreButton() {
+        let actionSheet = UIAlertController(title: "Post options", message: nil, preferredStyle: .actionSheet)
+        let reportAction = UIAlertAction(title: "Report Post", style: .destructive) { [weak self] _ in
+            self?.reportPost()
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addActions(reportAction, cancel)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func reportPost() {
+        
+    }
+}
+
+extension HomeViewController: InstagramFeedActionsTableViewCellDelegate {
+    func didTapLikeButton() {
+        //animate heart icon
+    }
+    
+    func didTapCommentButton() {
+        //show textfield to comment
+    }
+    
+    func didTapShareButton() {
+        //share post
     }
 }
