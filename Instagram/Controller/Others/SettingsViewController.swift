@@ -166,10 +166,8 @@ final class SettingsViewController: UIViewController {
         }
         let cancel = UIAlertAction(title: "Cancel", style: .destructive)
         
-        alert.addAction(actionLogin)
-        alert.addAction(actionCreateAccount)
-        alert.addAction(cancel)
-        
+        alert.addActions(actionLogin, actionCreateAccount, cancel)
+
         present(alert, animated: true) {
             alert.view.superview?.isUserInteractionEnabled = true // allow touch event outside alertVC to dismiss alert
             alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
@@ -184,7 +182,7 @@ final class SettingsViewController: UIViewController {
         
         let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        let actionLogout = UIAlertAction(title: "Logout", style: .destructive) { action in
+        let actionLogout = UIAlertAction(title: "Logout", style: .destructive) { logout in
             AuthManager.shared.logout { success in
                 DispatchQueue.main.async {
                     if success {
@@ -202,8 +200,7 @@ final class SettingsViewController: UIViewController {
             }
         }
         
-        logoutSheet.addAction(actionCancel)
-        logoutSheet.addAction(actionLogout)
+        logoutSheet.addActions(actionCancel, actionLogout)
         
         // Ipad crash fix
         logoutSheet.popoverPresentationController?.sourceView = tableView

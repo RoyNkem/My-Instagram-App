@@ -60,18 +60,18 @@ extension UIView {
             }
         }
     }
-
+    
     //MARK: - Shake TextField
     //Shake Textfield when user enters incorrect details or empty textfield
     public func animateInvalidLogin() {
         
         //option 1 Arcade Code Youtube
-//        let animation = CAKeyframeAnimation() //animation type
-//        animation.keyPath = "position.x" //static identifier for specific animation type
-//        animation.values = [0, 10, -10, 10, 0] // positions of x coord. when content shakes
-//        animation.keyTimes = [0, 0.16, 0.5, 0.83, 1] // animation timing
-//        animation.duration = 0.5
-//        animation.isAdditive = true
+        //        let animation = CAKeyframeAnimation() //animation type
+        //        animation.keyPath = "position.x" //static identifier for specific animation type
+        //        animation.values = [0, 10, -10, 10, 0] // positions of x coord. when content shakes
+        //        animation.keyTimes = [0, 0.16, 0.5, 0.83, 1] // animation timing
+        //        animation.duration = 0.5
+        //        animation.isAdditive = true
         
         //option 2
         let animation = CAKeyframeAnimation()
@@ -108,5 +108,15 @@ extension UIViewController {
     //Dismiss contoller when you tap outside its  area
     @objc func alertControllerBackgroundTapped() {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: - UIAlertController Actions
+extension UIAlertController {
+    //iterate array of actions in variadic parameter and adding individual actions to alertVC
+    public func addActions(_ actions: UIAlertAction...) {
+        for action in actions {
+            addAction(action)
+        }
     }
 }
