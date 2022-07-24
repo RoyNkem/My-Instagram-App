@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FormTableViewCellDelegate: AnyObject {
-    // function to extract value when user returns return key
+    // function to extract value when user hits return key
     func formTableViewCell(_ cell: FormTableViewCell, didUpdateField updatedModel: EditProfileFormModel)
 }
 
@@ -37,6 +37,7 @@ class FormTableViewCell: UITableViewCell {
         return field
     }()
     
+    //MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -54,7 +55,7 @@ class FormTableViewCell: UITableViewCell {
     //MARK: Configure cells
     public func configure( with model: EditProfileFormModel) {
         
-        self.model = model // we are saying let the model we passed from EditVC be stored in our model property here
+        self.model = model // we are storing the model we get from EditVC in our cell model property
         formLabel.text = model.label
         field.placeholder = model.placeholder
         field.text = model.value

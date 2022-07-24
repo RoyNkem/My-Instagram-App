@@ -7,6 +7,7 @@
 
 import UIKit
 
+///Shows a list of followers
 class ListViewController: UIViewController {
     
     private let data: [UserRelationship]

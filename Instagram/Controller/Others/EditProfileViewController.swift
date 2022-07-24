@@ -63,17 +63,19 @@ class EditProfileViewController: UIViewController {
     
     //MARK: - Set up Table Sections data
     private func configureModels() {
-//      name, username, website, bio
-        let sectionOneLabels = ["Name", "Username", "Bio"] //label is just one of 3 properties for the model
+        //      name, username, website, bio
         var sectionOne = [EditProfileFormModel]()
+        
+        let sectionOneLabels = ["Name", "Username", "Bio"] //label is just one of 3 properties for the model
+        
         for label in sectionOneLabels {
             let model = EditProfileFormModel(label: label, placeholder: "Enter \(label)...", value: nil)
             sectionOne.append(model)
         }
         models.append(sectionOne)
-
+        
         //email, phone, gender
-        let sectionTwoLabels = ["Email", "Phone", "Gender"] //label is just one of 3 properties for the model
+        let sectionTwoLabels = ["Email", "Phone", "Gender"]
         var sectionTwo = [EditProfileFormModel]()
         for label in sectionTwoLabels {
             let model = EditProfileFormModel(label: label, placeholder: "Enter \(label)...", value: nil)
@@ -109,14 +111,14 @@ class EditProfileViewController: UIViewController {
         let discardAction = UIAlertAction(title: "Discard Changes", style: .destructive) { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
-
+        
         cancelAlert.addAction(cancelAction)
         cancelAlert.addAction(discardAction)
-
+        
         // Ipad crash fix
         cancelAlert.popoverPresentationController?.sourceView = view
         cancelAlert.popoverPresentationController?.sourceRect = view.bounds
-
+        
         present(cancelAlert, animated: true) {
             cancelAlert.view.superview?.isUserInteractionEnabled = true // allows touch event outside alert controller
             cancelAlert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
@@ -145,7 +147,7 @@ class EditProfileViewController: UIViewController {
 
 //MARK: - EXTENSIONS
 
-extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource, FormTableViewCellDelegate {
+extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     //tableView Datasource
     func numberOfSections(in: UITableView) -> Int {
@@ -171,10 +173,10 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }
         return nil
     }
-    
-    //tableView Delegate
-    
-    
+}
+
+//MARK: - Form Cell Delegate
+extension EditProfileViewController: FormTableViewCellDelegate {
     // formtableview cell delegate
     func formTableViewCell(_ cell: FormTableViewCell, didUpdateField updatedModel: EditProfileFormModel) {
         print("Field value: \(updatedModel.value ?? "nil"), \(updatedModel.label)") // this is where we get the textfield info
