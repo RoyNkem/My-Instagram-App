@@ -40,6 +40,8 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         
         view.backgroundColor = .systemBackground
+        
+        createMockModels()
     }
     
     override func viewDidLayoutSubviews() {
@@ -51,7 +53,8 @@ class HomeViewController: UIViewController {
     //check if user is logged in already
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        configureNavigationHeaderImage()
+
         handleNotAuthenticated()
     }
     
@@ -83,6 +86,31 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func configureNavigationHeaderImage() {
+        let logo = UIImageView()
+        logo.image = UIImage(named: "blacktextlogo")
+        logo.contentMode = .scaleAspectFit
+        logo.frame = CGRect(x: 0, y: 0, width: 100, height: 25)
+//        logo.backgroundColor = .red
+        self.navigationItem.titleView = logo
+        
+        //right bar buttons for new post and chat
+        let addbutton = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .done, target: self, action: #selector(didTapAddButton))
+        addbutton.tintColor = .label
+
+        let chatbutton = UIBarButtonItem(image: UIImage(systemName: "message"), style: .done, target: self, action: #selector(didTapChatButton))
+        chatbutton.tintColor = .label
+
+        navigationItem.rightBarButtonItems = [chatbutton, addbutton]
+    }
+    
+    @objc private func didTapAddButton() {
+        //dd
+    }
+    @objc private func didTapChatButton() {
+        //dd
+    }
+     
     private func handleNotAuthenticated() {
         //Check Auth status
         if Auth.auth().currentUser == nil {
@@ -232,6 +260,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
