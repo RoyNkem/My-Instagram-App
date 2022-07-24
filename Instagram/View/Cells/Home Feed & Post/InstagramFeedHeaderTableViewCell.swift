@@ -42,6 +42,7 @@ final class InstagramFeedHeaderTableViewCell: UITableViewCell {
         return button
     }()
     
+    //MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -50,12 +51,12 @@ final class InstagramFeedHeaderTableViewCell: UITableViewCell {
         moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
     }
     
-    @objc func didTapMoreButton() {
-        delegate?.didTapMoreButton()
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func didTapMoreButton() {
+        delegate?.didTapMoreButton()
     }
     
     //MARK: - Update Content of Header

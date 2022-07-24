@@ -151,7 +151,7 @@ extension NotificationViewController: NotificationLikeEventTableViewCellDelegate
         switch model.type {
         case .like(let post):
             //open post. Get into delegation
-            let vc = PostViewController(model: nil)
+            let vc = PostViewController(model: post)
             vc.navigationItem.title = post.postType.rawValue
             vc.navigationItem.largeTitleDisplayMode = .never
             navigationController?.pushViewController(vc, animated: true)

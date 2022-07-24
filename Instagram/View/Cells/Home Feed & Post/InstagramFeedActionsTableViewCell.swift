@@ -22,21 +22,27 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     //MARK: - Declare UI Elememts
     private let likeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "heart"), for: .normal)
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
+        let image = UIImage(systemName: "heart", withConfiguration: config)
+        button.setImage(image, for: .normal)
         button.tintColor = .label
         return button
     }()
     
     private let commentButton: UIButton = {
         let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
+        let image = UIImage(systemName: "message", withConfiguration: config)
+        button.setImage(image, for: .normal)
         button.tintColor = .label
-        button.setImage(UIImage(named: "message"), for: .normal)
         return button
     }()
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "arrow.uturn.right"), for: .normal)
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
+        let image = UIImage(systemName: "arrow.uturn.right", withConfiguration: config)
+        button.setImage(image, for: .normal)
         button.tintColor = .label
         return button
     }()
@@ -56,6 +62,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
         shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
     }
     
+    //MARK: - Button Selectors 
     @objc private func didTapLikeButton() {
         delegate?.didTapLikeButton()
     }

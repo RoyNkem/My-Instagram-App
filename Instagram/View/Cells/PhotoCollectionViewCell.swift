@@ -46,12 +46,15 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: - Congigure cell with a model
-    public func configure(with model: UserPost) {
-        let url = model.thumbnailImage
-        photoImageView.sd_setImage(with: url, completed: nil)
-    }
+//    public func configure(with model: UserPost) {
+//        let url = model.thumbnailImage
+//        photoImageView.sd_setImage(with: url, completed: nil)
+//    }
     
     public func configure(with ImageName: String) {
-        photoImageView.image = UIImage(named: "Roy1")
+        
+        for x in 0..<100 {
+            photoImageView.image = UIImage(named: x % 2 == 0 ? "Roy2" : "Roy3")
+        }
     }
 }

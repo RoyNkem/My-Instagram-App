@@ -60,6 +60,7 @@ final class ProfileViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     }
     
+    //MARK: - VIEW LAYOUT
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -68,10 +69,8 @@ final class ProfileViewController: UIViewController {
     
     // set up settings gear as nav item
     func configureNavigationBar() {
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done
                                                             , target: self, action: #selector(didTapSettingsButton))
-        //        self.navigationItem.backBarButtonItem?.title = ""
     }
     
     @objc func didTapSettingsButton() {
@@ -110,9 +109,18 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //get the model and open post controller
         //        let model = userposts[indexPath.row]
+        let user = User(username: "Joe_king", bio: "Music Artist",
+                        name: (first: "Steve", last: "Joe"), birthday: Date(), profilePhoto: URL(string: "Roy3")!, gender: .male,
+                        counts: UserCount(following: 1, followers: 1, posts: 3), joinDate: Date())
         
-        let vc = PostViewController(model: nil)
-        vc.navigationItem.title = "Posts"
+        let post = UserPost(identifier: "", postType: .photo,
+                            thumbnailImage: URL(string: "Roy3")!,
+                            postURL: URL(string: "https://www.google.com")!,
+                            caption: "", likeCount: [],
+                            comments: [], createdDate: Date(), taggedUser: [], owner: user)
+        
+        let vc = PostViewController(model: post)
+        vc.navigationItem.title = post.postType.rawValue
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -150,8 +158,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 }
 
-//MARK: - Profile Tab View Delegate
-extension ProfileViewController: ProfileTabsCollectionReusableViewDelegate, ProfileInfoHeaderCollectionReusableViewDelegate {
+//MARK: - Profile Tabs View Delegate
+extension ProfileViewController: ProfileTabsCollectionReusableViewDelegate {
     
     func didTapGridButtonTab(_ header: ProfileTabsCollectionReusableView) {
         //reload collection view with data
@@ -164,8 +172,11 @@ extension ProfileViewController: ProfileTabsCollectionReusableViewDelegate, Prof
         //reload collection view with data
         
     }
+}
     
-    //MARK: - Profile Info View Delegate
+    //MARK: - Profile Info Header View
+extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate {
+    
     func profileHeaderDidTapEditButton(_ header: ProfileInfoHeaderCollectionReusableView) {
         let vc = EditProfileViewController()
         vc.navigationItem.title = "Edit Profile"
