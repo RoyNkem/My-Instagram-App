@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300DD9D9288D8BEE009DB4C7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300DD9D8288D8BEE009DB4C7 /* ChatViewController.swift */; };
+		300DD9DB288D8D1B009DB4C7 /* UsersChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300DD9DA288D8D1B009DB4C7 /* UsersChatTableViewCell.swift */; };
 		300EE719287A2FDF00215246 /* UserFollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */; };
 		303C25632876100A00FA38BA /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */; };
 		303C2566287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C2565287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift */; };
@@ -48,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300DD9D8288D8BEE009DB4C7 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		300DD9DA288D8D1B009DB4C7 /* UsersChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersChatTableViewCell.swift; sourceTree = "<group>"; };
 		300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowTableViewCell.swift; sourceTree = "<group>"; };
 		303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		303C2565287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				30C69F24286F1E9E0018A46B /* ListViewController.swift */,
 				30C69F26286F1EAB0018A46B /* SearchViewController.swift */,
 				30C69F28286F1EB90018A46B /* SearchResultsViewController.swift */,
+				300DD9D8288D8BEE009DB4C7 /* ChatViewController.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				30D366452870EBEE00813A84 /* Home Feed & Post */,
 				300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */,
 				30D67B64287B255F003E5DB5 /* Notifications */,
+				300DD9DA288D8D1B009DB4C7 /* UsersChatTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -426,12 +432,14 @@
 				30C69F2D286F27790018A46B /* RegistrationViewController.swift in Sources */,
 				30D366472870EC2600813A84 /* InstagramFeedHeaderTableViewCell.swift in Sources */,
 				30D15DB8286F1C9A0028A7A2 /* SceneDelegate.swift in Sources */,
+				300DD9DB288D8D1B009DB4C7 /* UsersChatTableViewCell.swift in Sources */,
 				30D67B63287B2559003E5DB5 /* NotificationLikeEventTableViewCell.swift in Sources */,
 				305E869C286F3F03000E2C5C /* DatabaseManager.swift in Sources */,
 				3055D17A286F49A000B48F20 /* Extension.swift in Sources */,
 				30D366442870E84200813A84 /* InstagramFeedPostTableViewCell.swift in Sources */,
 				30C69F2B286F276B0018A46B /* LoginViewController.swift in Sources */,
 				30D15DD3286F1D980028A7A2 /* CameraViewController.swift in Sources */,
+				300DD9D9288D8BEE009DB4C7 /* ChatViewController.swift in Sources */,
 				30C69F25286F1E9E0018A46B /* ListViewController.swift in Sources */,
 				30F47DF328763AC70098931C /* Models.swift in Sources */,
 				303F03F8287AF6FB00BCEED7 /* NoNotificationsView.swift in Sources */,

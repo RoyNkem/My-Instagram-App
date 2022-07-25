@@ -40,7 +40,8 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         
         view.backgroundColor = .systemBackground
-        
+        configureNavigationHeaderImage()
+
         createMockModels()
     }
     
@@ -53,7 +54,6 @@ class HomeViewController: UIViewController {
     //check if user is logged in already
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        configureNavigationHeaderImage()
 
         handleNotAuthenticated()
     }
@@ -87,6 +87,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureNavigationHeaderImage() {
+        //left text logo
         let logo = UIImageView()
         logo.image = UIImage(named: "blacktextlogo")
         logo.contentMode = .scaleAspectFit
@@ -95,10 +96,10 @@ class HomeViewController: UIViewController {
         self.navigationItem.titleView = logo
         
         //right bar buttons for new post and chat
-        let addbutton = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .done, target: self, action: #selector(didTapAddButton))
+        let addbutton = UIBarButtonItem(image: UIImage(systemName: "plus.app"), style: .plain, target: self, action: #selector(didTapAddButton))
         addbutton.tintColor = .label
 
-        let chatbutton = UIBarButtonItem(image: UIImage(systemName: "message"), style: .done, target: self, action: #selector(didTapChatButton))
+        let chatbutton = UIBarButtonItem(image: UIImage(systemName: "message"), style: .plain, target: self, action: #selector(didTapChatButton))
         chatbutton.tintColor = .label
 
         navigationItem.rightBarButtonItems = [chatbutton, addbutton]
@@ -109,8 +110,11 @@ class HomeViewController: UIViewController {
     }
     @objc private func didTapChatButton() {
         //dd
+        let chatVC = ChatViewController()
+        navigationItem.backButtonTitle = "roy.aiyetin"
+        navigationController?.pushViewController(chatVC, animated: true)
     }
-     
+    
     private func handleNotAuthenticated() {
         //Check Auth status
         if Auth.auth().currentUser == nil {
@@ -268,8 +272,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let subsection = section % 4
         if subsection == 3 { // comments subsection
             return 70 // spacing  between posts
-        }
-        else {
+        }else {
             return 0
         }
     }
@@ -308,5 +311,9 @@ extension HomeViewController: InstagramFeedActionsTableViewCellDelegate {
     
     func didTapShareButton() {
         //share post
+    }
+    
+    func didTapSaveButton() {
+        // bookmark post to view later
     }
 }

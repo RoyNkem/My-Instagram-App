@@ -39,12 +39,13 @@ final class InstagramFeedPostTableViewCell: UITableViewCell {
     
     // //MARK: - Update the Post Content
     public func configure(with post: UserPost) {
-        postImageView.image = UIImage(named: "Roy1")
+        postImageView.image = UIImage(named: "Roy2")
         
         return
         
         switch post.postType {
         case .photo:
+            //fetch user photo post
             postImageView.sd_setImage(with: post.postURL, completed: nil)
         case .video:
             //load and play video

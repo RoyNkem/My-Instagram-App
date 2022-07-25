@@ -154,6 +154,7 @@ extension NotificationViewController: NotificationLikeEventTableViewCellDelegate
             let vc = PostViewController(model: post)
             vc.navigationItem.title = post.postType.rawValue
             vc.navigationItem.largeTitleDisplayMode = .never
+            print("\(model.text)") // same value for fetch notification 
             navigationController?.pushViewController(vc, animated: true)
             
         case .follow(_):

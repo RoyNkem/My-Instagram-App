@@ -11,6 +11,7 @@ protocol InstagramFeedActionsTableViewCellDelegate: AnyObject {
     func didTapLikeButton()
     func didTapCommentButton()
     func didTapShareButton()
+    func didTapSaveButton()
 }
 
 final class InstagramFeedActionsTableViewCell: UITableViewCell {
@@ -22,7 +23,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     //MARK: - Declare UI Elememts
     private let likeButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
         let image = UIImage(systemName: "heart", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
@@ -31,7 +32,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     
     private let commentButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
         let image = UIImage(systemName: "message", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
@@ -40,8 +41,17 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
         let image = UIImage(systemName: "arrow.uturn.right", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .label
+        return button
+    }()
+    
+    private let saveButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
+        let image = UIImage(systemName: "bookmark", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
         return button
@@ -55,11 +65,12 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubviews(likeButton, shareButton, commentButton)
+        contentView.addSubviews(likeButton, shareButton, commentButton, saveButton)
         
         likeButton.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
         commentButton.addTarget(self, action: #selector(didTapCommentButton), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
     }
     
     //MARK: - Button Selectors 
@@ -75,6 +86,11 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
         
     }
     
+    @objc private func didTapSaveButton() {
+        delegate?.didTapSaveButton()
+        
+    }
+    
     public func configure(with post: String) {
         //configure cell content
         
@@ -86,7 +102,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
         
         //like, comment, send buttons
         //since the buttons are all similar, lets iterate through a single frame size using one variable: buttonSize
-        let buttonSize: CGFloat = contentView.height - 10
+        let buttonSize: CGFloat = contentView.height - 15
         let buttons = [likeButton, commentButton, shareButton]
         
         for x in 0..<buttons.count {//Very smart
@@ -94,6 +110,8 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
             button.frame = CGRect(x: (CGFloat(x) * buttonSize) + (10 * CGFloat(x+1)),
                                   y: 5, width: buttonSize, height: buttonSize)
         }
+        
+        saveButton.frame = CGRect(x: contentView.width - (buttonSize + 15), y: 5, width: buttonSize, height: buttonSize)
         
     }
     
