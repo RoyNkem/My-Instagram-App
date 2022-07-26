@@ -120,3 +120,108 @@ extension UIAlertController {
         }
     }
 }
+
+//MARK: - UISegmentedControl Actions
+//extension UISegmentedControl {
+//
+//    func removeBorder(){
+//
+//        self.tintColor = UIColor.clear
+//        self.backgroundColor = UIColor.clear
+//        self.setTitleTextAttributes( [NSAttributedString.Key.foregroundColor : UIColor.stavkrugDarkBlue], for: .selected)
+//        self.setTitleTextAttributes( [NSAttributedString.Key.foregroundColor : UIColor.gray], for: .normal)
+//        if #available(iOS 13.0, *) {
+//            self.selectedSegmentTintColor = UIColor.clear
+//        }
+//
+//    }
+//
+//    func setupSegment() {
+//        self.removeBorder()
+//        let segmentUnderlineWidth: CGFloat = self.bounds.width
+//        let segmentUnderlineHeight: CGFloat = 2.0
+//        let segmentUnderlineXPosition = self.bounds.minX
+//        let segmentUnderLineYPosition = self.bounds.size.height - 1.0
+//        let segmentUnderlineFrame = CGRect(x: segmentUnderlineXPosition, y: segmentUnderLineYPosition, width: segmentUnderlineWidth, height: segmentUnderlineHeight)
+//        let segmentUnderline = UIView(frame: segmentUnderlineFrame)
+//        segmentUnderline.backgroundColor = UIColor.clear
+//
+//        self.addSubview(segmentUnderline)
+//        self.addUnderlineForSelectedSegment()
+//    }
+//
+//    func addUnderlineForSelectedSegment(){
+//
+//        let underlineWidth: CGFloat = self.bounds.size.width / CGFloat(self.numberOfSegments)
+//        let underlineHeight: CGFloat = 2.0
+//        let underlineXPosition = CGFloat(selectedSegmentIndex * Int(underlineWidth))
+//        let underLineYPosition = self.bounds.size.height - 1.0
+//        let underlineFrame = CGRect(x: underlineXPosition, y: underLineYPosition, width: underlineWidth, height: underlineHeight)
+//        let underline = UIView(frame: underlineFrame)
+//        underline.backgroundColor = UIColor.stavkrugDarkBlue
+//        underline.tag = 1
+//        self.addSubview(underline)
+//
+//
+//    }
+//
+//    func changeUnderlinePosition(){
+//        guard let underline = self.viewWithTag(1) else {return}
+//        let underlineFinalXPosition = (self.bounds.width / CGFloat(self.numberOfSegments)) * CGFloat(selectedSegmentIndex)
+//        underline.frame.origin.x = underlineFinalXPosition
+//
+//    }
+//}
+
+extension UISegmentedControl{
+    func removeBorder(){
+        let backgroundImage = UIImage.getColoredRectImageWith(color: UIColor.secondarySystemFill.cgColor, andSize: self.bounds.size)
+        self.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
+        self.setBackgroundImage(backgroundImage, for: .selected, barMetrics: .default)
+        self.setBackgroundImage(backgroundImage, for: .highlighted, barMetrics: .default) // background image for segmented controls will be white
+
+        let dividerImage = UIImage.getColoredRectImageWith(color: UIColor.label.cgColor, andSize: CGSize(width: 1.0, height: self.bounds.size.height))
+        self.setDividerImage(dividerImage, forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default) // divider image will be white
+        self.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
+        self.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+    }
+
+    //add view (underline) to selected segments
+    func addUnderlineForSelectedSegment(){
+        removeBorder()
+        let underlineWidth: CGFloat = self.bounds.size.width / CGFloat(self.numberOfSegments) //width for selected segment
+        let underlineHeight: CGFloat = 2.0
+        let underlineXPosition = CGFloat(selectedSegmentIndex * Int(underlineWidth))
+        let underLineYPosition = self.bounds.size.height - 1.0
+        let underlineFrame = CGRect(x: underlineXPosition, y: underLineYPosition, width: underlineWidth, height: underlineHeight)
+        let underline = UIView(frame: underlineFrame)
+        underline.backgroundColor = UIColor.secondaryLabel
+        underline.tag = 1 // An Int used to identify views object
+        self.addSubview(underline)
+    }
+
+    func changeUnderlinePosition(){
+        guard let underline = self.viewWithTag(1) else {return} //returns view created above
+        let underlineFinalXPosition = (self.bounds.width / CGFloat(self.numberOfSegments)) * CGFloat(selectedSegmentIndex)
+        UIView.animate(withDuration: 0.1, animations: {
+            underline.frame.origin.x = underlineFinalXPosition
+        })
+    }
+}
+
+extension UIImage{
+
+    class func getColoredRectImageWith(color: CGColor, andSize size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0) //create graphics  context with options: size in points, opaque bool and scale
+        let graphicsContext = UIGraphicsGetCurrentContext() //returns current context created above
+        graphicsContext?.setFillColor(color) // set fill color using parameter pass from super func.
+        
+        let rectangle = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
+        graphicsContext?.fill(rectangle) //paints the specified area with color passed
+        
+        let rectangleImage = UIGraphicsGetImageFromCurrentImageContext() //return image from graphics context above
+        
+        UIGraphicsEndImageContext() //removes current context from top of stack to clean drawing environment started above
+        return rectangleImage! // we have an image from the content of our graphics context with the size we pass in and filled with the color
+    }
+}
