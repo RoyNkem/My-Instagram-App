@@ -31,14 +31,16 @@ final class InstagramFeedHeaderTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .label
         label.numberOfLines = 1
-        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.font = .systemFont(ofSize: 13, weight: .medium)
         return label
     }()
     
     private let moreButton: UIButton = {
         let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .regular)
+        let image = UIImage(systemName: "ellipsis", withConfiguration: config)
+        button.setImage(image, for: .normal)
         button.tintColor = .label
-        button.setImage(UIImage(named: "ellipsis"), for: .normal)
         return button
     }()
     
@@ -71,13 +73,14 @@ final class InstagramFeedHeaderTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let size = contentView.height/4
-        profilePhotoImageView.frame = CGRect(x: 2, y: 2, width: size, height: size)
-        profilePhotoImageView.layer.cornerRadius = size/2
+        let size = contentView.height/5
+        profilePhotoImageView.frame = CGRect(x: size, y: size, width: size*3, height: size*3)
+        profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.height/2
         
-        usernameLabel.frame = CGRect(x: profilePhotoImageView.right + 10, y: 2, width: contentView.width - (size - 2) - 15, height: contentView.height - 4)
+        usernameLabel.frame = CGRect(x: profilePhotoImageView.right + 10, y: contentView.height/3, width: contentView.width - (size - 2) - 15, height: contentView.height/3)
         
-        moreButton.frame = CGRect(x: contentView.width - size, y: 2, width: size, height: size)
+        let buttonSize = contentView.height/3
+        moreButton.frame = CGRect(x: contentView.width - (size + buttonSize + 15), y: buttonSize, width: buttonSize, height: buttonSize)
       
     }
     

@@ -23,7 +23,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     //MARK: - Declare UI Elememts
     private let likeButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let image = UIImage(systemName: "heart", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
@@ -32,7 +32,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     
     private let commentButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let image = UIImage(systemName: "message", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
@@ -41,7 +41,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let image = UIImage(systemName: "arrow.uturn.right", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
@@ -50,7 +50,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     
     private let saveButton: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let image = UIImage(systemName: "bookmark", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label

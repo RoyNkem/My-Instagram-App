@@ -155,7 +155,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         switch model.renderType {
         case .actions(_): return 60
             
-        case .header(_): return 70
+        case .header(_): return 50
             
         case .primaryContent(_): return tableView.width //post should be a square
             

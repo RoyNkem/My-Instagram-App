@@ -146,7 +146,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         ///Design an expression to make subsection
         //for each batch of 4 sections we want to use the same model
-        else {// from calculation -> (x, position) = (1, 0) (2, 0) (3, 0) || (4, 1) (5, 1) (6, 1)
+        else {// from calculation -> (x section, subsection) = (1, 0) (2, 0) (3, 0) || (4, 1) (5, 1) (6, 1)
             let subsection = x % 4 == 0 ? x/4 : ((x - (x % 4)) / 4) // modulus operator returns the remainder after dividing
             model = feedRenderModels[subsection] // grab the respective position defined above
         }
@@ -243,10 +243,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     //MARK: - Row Height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let subsection = indexPath.section % 4
-        
         if subsection == 0 {
             //header
-            return 70
+            return 50
         }
         else if subsection == 1 {
             //post

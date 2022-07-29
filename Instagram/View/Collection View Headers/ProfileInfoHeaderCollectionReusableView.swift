@@ -21,7 +21,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     public weak var delegate: ProfileInfoHeaderCollectionReusableViewDelegate?
     
-    private var isActive: Bool = false
+    private var isActive: Bool = true
 
     //MARK: - Declare UI Elements
     private let profilePhotoImageView: UIImageView = {
@@ -156,12 +156,12 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         UIView.animate(withDuration: 0.2, animations: {
             // add animation
         }) { (done) in
-            if self.isActive {
+            if self.isActive == false {
+                self.isActive = true 
+                self.extraButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            } else {
                 self.isActive = false
                 self.extraButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-            } else {
-                self.isActive = true
-                self.extraButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             }
 
         }
