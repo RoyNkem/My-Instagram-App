@@ -205,7 +205,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             case .comments, .actions, .primaryContent: return UITableViewCell()
             }
         }
-        else if subsection == 0 {
+        else if subsection == 1 {
             // post
             switch model.post.renderType {
             case .primaryContent(let post):
@@ -216,7 +216,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             case .comments, .actions, .header: return UITableViewCell()
             }
         }
-        else if subsection == 0 {
+        else if subsection == 2 {
             // actions
             switch model.action.renderType {
             case .actions(let provider):
@@ -228,7 +228,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             case .comments, .header, .primaryContent: return UITableViewCell()
             }
         }
-        else if subsection == 0 {
+        else if subsection == 3 {
             switch model.comments.renderType {
             case .comments(let comments):
                 let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedGeneralTableViewCell.identifier, for: indexPath) as! InstagramFeedGeneralTableViewCell

@@ -91,6 +91,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
         
     }
     
+    //MARK: - Configure button actions
     public func configure(with post: String) {
         //configure cell content
         

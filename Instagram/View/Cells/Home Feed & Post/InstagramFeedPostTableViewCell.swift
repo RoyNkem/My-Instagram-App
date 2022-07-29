@@ -39,7 +39,7 @@ final class InstagramFeedPostTableViewCell: UITableViewCell {
     
     // //MARK: - Update the Post Content
     public func configure(with post: UserPost) {
-        postImageView.image = UIImage(named: "Roy2")
+        postImageView.image = UIImage(named: "Bed")
         
         return
         
