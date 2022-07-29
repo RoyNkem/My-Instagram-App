@@ -27,6 +27,7 @@ enum PostRenderType {
     case header(provider: User) // profile picture, username
     case primaryContent(provider: UserPost) // post: picture or video
     case actions(provider: String) // like, share, comment buttons
+//    case captions(provider: User) // User comments
     case comments(comments: [PostComment]) //comments
 }
 /// Model of  rendered post
