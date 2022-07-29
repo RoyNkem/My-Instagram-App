@@ -14,7 +14,7 @@ final class ProfileViewController: UIViewController {
     private var collectionView: UICollectionView? // optional because instantiate with flowlayout
     
     private var userposts = [UserPost]()
-    
+        
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -213,7 +213,7 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
         navigationController?.pushViewController(vc, animated: true)
     }
     func profileHeaderDidTapExtraButton(_ header: ProfileInfoHeaderCollectionReusableView) {
-        collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+//        collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
     }
 }
 

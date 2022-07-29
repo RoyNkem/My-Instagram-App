@@ -21,6 +21,8 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     public weak var delegate: ProfileInfoHeaderCollectionReusableViewDelegate?
     
+    private var isActive: Bool = false
+
     //MARK: - Declare UI Elements
     private let profilePhotoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -146,9 +148,23 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     @objc func didTapPostButton() {
         delegate?.profileHeaderDidTapPostButton(self)
     }
+    
     @objc func didTapExtraButton() {
         delegate?.profileHeaderDidTapExtraButton(self)
-//        extraButton.setImage(UIImage(systemName: "chevron.up"), for: .selected)
+        
+        //change current button image after tap
+        UIView.animate(withDuration: 0.2, animations: {
+            // add animation
+        }) { (done) in
+            if self.isActive {
+                self.isActive = false
+                self.extraButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+            } else {
+                self.isActive = true
+                self.extraButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            }
+
+        }
     }
     
     //MARK: - Assign Frames
