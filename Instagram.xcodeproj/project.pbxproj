@@ -10,7 +10,7 @@
 		300DD9D9288D8BEE009DB4C7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300DD9D8288D8BEE009DB4C7 /* ChatViewController.swift */; };
 		300DD9DB288D8D1B009DB4C7 /* UsersChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300DD9DA288D8D1B009DB4C7 /* UsersChatTableViewCell.swift */; };
 		300EE719287A2FDF00215246 /* UserFollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */; };
-		301DD6472894A3C000543929 /* InstagramFeedCaptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301DD6462894A3C000543929 /* InstagramFeedCaptionTableViewCell.swift */; };
+		301DD64B2894AAAC00543929 /* InstagramFeedCaptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301DD64A2894AAAC00543929 /* InstagramFeedCaptionTableViewCell.swift */; };
 		303C25632876100A00FA38BA /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */; };
 		303C2566287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C2565287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift */; };
 		303C2568287610DB00FA38BA /* ProfileTabsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C2567287610DB00FA38BA /* ProfileTabsCollectionReusableView.swift */; };
@@ -54,7 +54,7 @@
 		300DD9D8288D8BEE009DB4C7 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		300DD9DA288D8D1B009DB4C7 /* UsersChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersChatTableViewCell.swift; sourceTree = "<group>"; };
 		300EE718287A2FDF00215246 /* UserFollowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowTableViewCell.swift; sourceTree = "<group>"; };
-		301DD6462894A3C000543929 /* InstagramFeedCaptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedCaptionTableViewCell.swift; sourceTree = "<group>"; };
+		301DD64A2894AAAC00543929 /* InstagramFeedCaptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedCaptionTableViewCell.swift; sourceTree = "<group>"; };
 		303C25622876100A00FA38BA /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		303C2565287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		303C2567287610DB00FA38BA /* ProfileTabsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabsCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -266,7 +266,7 @@
 				30D366462870EC2600813A84 /* InstagramFeedHeaderTableViewCell.swift */,
 				30D366482870EC7B00813A84 /* InstagramFeedActionsTableViewCell.swift */,
 				30D3664A2870EC9F00813A84 /* InstagramFeedGeneralTableViewCell.swift */,
-				301DD6462894A3C000543929 /* InstagramFeedCaptionTableViewCell.swift */,
+				301DD64A2894AAAC00543929 /* InstagramFeedCaptionTableViewCell.swift */,
 			);
 			path = "Home Feed & Post";
 			sourceTree = "<group>";
@@ -418,7 +418,7 @@
 				303C2566287610B300FA38BA /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
 				30C69F1D286F1E6C0018A46B /* PostViewController.swift in Sources */,
 				30D67B61287B2541003E5DB5 /* NotificationFollowEventTableViewCell.swift in Sources */,
-				301DD6472894A3C000543929 /* InstagramFeedCaptionTableViewCell.swift in Sources */,
+				301DD64B2894AAAC00543929 /* InstagramFeedCaptionTableViewCell.swift in Sources */,
 				30D15DB6286F1C9A0028A7A2 /* AppDelegate.swift in Sources */,
 				305E869A286F3EF5000E2C5C /* StorageManager.swift in Sources */,
 				30D15DD1286F1D8F0028A7A2 /* ExploreViewController.swift in Sources */,

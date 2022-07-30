@@ -281,6 +281,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK: Header Delegate Methods
 extension HomeViewController: InstagramFeedHeaderTableViewCellDelegate {
     func didTapMoreButton() {
         let actionSheet = UIAlertController(title: "Post options", message: nil, preferredStyle: .actionSheet)
@@ -298,6 +299,8 @@ extension HomeViewController: InstagramFeedHeaderTableViewCellDelegate {
         
     }
 }
+
+//MARK: Action Buttons Delegate Methods
 
 extension HomeViewController: InstagramFeedActionsTableViewCellDelegate {
     func didTapLikeButton() {
