@@ -67,8 +67,8 @@ class PostViewController: UIViewController {
         var comments = [PostComment]()
         for i in 0..<2 {
             comments.append(PostComment(identifier: "123_\(i)",
-                                        username: i % 2 == 0 ? "adam_link" : "solo.wonder",
-                                        text: i % 2 == 0 ? "Great chairs" : "How do i get similar furnitures?",
+                                        username: i % 2 == 1 ? "adam_link" : "solo.wonder",
+                                        text: i % 2 == 1 ? "Great chairs" : "How do i get similar furnitures?",
                                         createdDate: Date(), likes: []))
         }
         
@@ -149,6 +149,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         switch model.renderType {
         case .actions(let actions):
             let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedActionsTableViewCell.identifier, for: indexPath) as! InstagramFeedActionsTableViewCell
+            cell.delegate = self
             return cell
             
         case .header(let user):
@@ -163,6 +164,8 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .comments(let comments):
             let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedGeneralTableViewCell.identifier, for: indexPath) as! InstagramFeedGeneralTableViewCell
+            cell.configure(with: comments)
+            cell.delegate = self
             return cell
             
         case .captions(provider: let post):
@@ -192,5 +195,33 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .captions(_): return 70
         }
+    }
+}
+
+extension PostViewController: InstagramFeedGeneralTableViewCellDelegate, InstagramFeedActionsTableViewCellDelegate {
+    //Comment Like Button
+    func didTapCommentLikeButton() {
+        //animate heart icon
+    }
+    
+    func didTapShowMoreCommentsButton() {
+        //Go to Comments VC
+    }
+    
+    //Action Buttons
+    func didTapLikeButton() {
+        //animate heart icon
+    }
+    
+    func didTapCommentButton() {
+        //show textfield to comment
+    }
+    
+    func didTapShareButton() {
+        //share post
+    }
+    
+    func didTapSaveButton() {
+        // bookmark post to view later
     }
 }

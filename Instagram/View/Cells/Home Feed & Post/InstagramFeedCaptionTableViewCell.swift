@@ -7,8 +7,9 @@
 
 import UIKit
 
-class InstagramFeedCaptionTableViewCell: UITableViewCell {
-    
+
+final class InstagramFeedCaptionTableViewCell: UITableViewCell {
+        
     static let identifier = "InstagramFeedCaptionTableViewCell"
     
     //MARK: Declare UI Elements
@@ -47,8 +48,8 @@ class InstagramFeedCaptionTableViewCell: UITableViewCell {
 //MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .systemRed
-//        contentView.addSubviews(numberOfLikes, captionText, usernameLabel, datePosted)
+//        contentView.backgroundColor = .systemRed
+        contentView.addSubviews(numberOfLikes, captionText, usernameLabel, datePosted)
     }
     
     required init?(coder: NSCoder) {
@@ -62,7 +63,7 @@ class InstagramFeedCaptionTableViewCell: UITableViewCell {
         let size = contentView.height/3
         numberOfLikes.frame = CGRect(x: 20, y: 0, width: contentView.width, height: size)
         usernameLabel.frame = CGRect(x: 20, y: numberOfLikes.bottom, width: contentView.width/6, height: size)
-        captionText.frame = CGRect(x: usernameLabel.right + 3, y: numberOfLikes.bottom, width: contentView.width - usernameLabel.width, height: size)
+        captionText.frame = CGRect(x: usernameLabel.right, y: numberOfLikes.bottom, width: contentView.width - usernameLabel.width, height: size)
         datePosted.frame = CGRect(x: 20, y: usernameLabel.bottom, width: contentView.width, height: size)
     }
   
