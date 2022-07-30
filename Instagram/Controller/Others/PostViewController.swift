@@ -27,6 +27,7 @@ enum PostRenderType {
     case header(provider: User) // profile picture, username
     case primaryContent(provider: UserPost) // post: picture or video
     case actions(provider: String) // like, share, comment buttons
+    case captions(provider: UserPost) // number of likes, username, caption
     case comments(comments: [PostComment]) //comments
 }
 /// Model of  rendered post
@@ -55,28 +56,45 @@ class PostViewController: UIViewController {
         tableView.register(InstagramFeedHeaderTableViewCell.self, forCellReuseIdentifier: InstagramFeedHeaderTableViewCell.identifier)
         tableView.register(InstagramFeedActionsTableViewCell.self, forCellReuseIdentifier: InstagramFeedActionsTableViewCell.identifier)
         tableView.register(InstagramFeedGeneralTableViewCell.self, forCellReuseIdentifier: InstagramFeedGeneralTableViewCell.identifier)
+        tableView.register(InstagramFeedCaptionTableViewCell.self, forCellReuseIdentifier: InstagramFeedCaptionTableViewCell.identifier)
         return tableView
     }()
     
     //MARK: - Model Configure data
     private func configureModels() {
-        guard let userPostModel = self.model else { return } //grab the model that came in from initializer of PostVC
+//        guard let userPostModel = self.model else { return } //grab the model that came in from initializer of PostVC
+        
+        var comments = [PostComment]()
+        for i in 0..<2 {
+            comments.append(PostComment(identifier: "123_\(i)",
+                                        username: i % 2 == 0 ? "adam_link" : "solo.wonder",
+                                        text: i % 2 == 0 ? "Great chairs" : "How do i get similar furnitures?",
+                                        createdDate: Date(), likes: []))
+        }
+        
+        let user = User(username: "roy.aiyetin", bio: "Music Artist",
+                        name: (first: "Steve", last: "Joe"), birthday: Date(), profilePhoto: URL(string: "Roy3")!, gender: .male,
+                        counts: UserCount(following: 1, followers: 1, posts: 3), joinDate: Date())
+        
+        let post = UserPost(identifier: "", postType: .photo,
+                            thumbnailImage: URL(string: "Roy3")!,
+                            postURL: URL(string: "https://www.google.com")!,
+                            caption: "Trying on these new set of furnitures i got from IKEA", likeCount: [],
+                            comments: comments, createdDate: Date(), taggedUser: [], owner: user)
         
         //Header
-        renderModels.append(PostRenderViewModel(renderType: .header(provider: userPostModel.owner)))
+        renderModels.append(PostRenderViewModel(renderType: .header(provider: user)))
         
         //Post
-        renderModels.append(PostRenderViewModel(renderType: .primaryContent(provider: userPostModel)))
+        renderModels.append(PostRenderViewModel(renderType: .primaryContent(provider: post)))
         
         //Action
         renderModels.append(PostRenderViewModel(renderType: .actions(provider: "")))
         
+        //Caption
+        renderModels.append(PostRenderViewModel(renderType: .captions(provider: post)))
+        
         //4 Comments
-        var comments = [PostComment]()
-        for i in 0..<4 {
-            comments.append(PostComment(identifier: "123_\(i)", username: "adam_link", text: "Great Post", createdDate: Date(), likes: [])
-            )
-        }
         renderModels.append(PostRenderViewModel(renderType: .comments(comments: comments)))
     }
     
@@ -87,12 +105,15 @@ class PostViewController: UIViewController {
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        configureTableView()
         view.addSubviews(tableView)
-        
+        view.backgroundColor = .systemBackground
+    }
+    
+    private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        view.backgroundColor = .systemBackground
+        tableView.separatorStyle = .none
     }
     
     override func viewDidLayoutSubviews() {
@@ -116,6 +137,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         case .comments(let comments): return comments.count > 4 ? 4 : comments.count
         case .header(_): return 1
         case .primaryContent(_): return 1
+        case .captions(_): return 1
         }
         
     }
@@ -131,14 +153,21 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .header(let user):
             let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedHeaderTableViewCell.identifier, for: indexPath) as! InstagramFeedHeaderTableViewCell
+            cell.configure(with: user)
             return cell
             
         case .primaryContent(let post):
             let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedPostTableViewCell.identifier, for: indexPath) as! InstagramFeedPostTableViewCell
+            cell.configure(with: post)
             return cell
             
         case .comments(let comments):
             let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedGeneralTableViewCell.identifier, for: indexPath) as! InstagramFeedGeneralTableViewCell
+            return cell
+            
+        case .captions(provider: let post):
+            let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedCaptionTableViewCell.identifier, for: indexPath) as! InstagramFeedCaptionTableViewCell
+            cell.configure(with: post)
             return cell
         }
     }
@@ -153,13 +182,15 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         let model = renderModels[indexPath.section]
         
         switch model.renderType {
-        case .actions(_): return 60
+        case .actions(_): return 50
             
         case .header(_): return 50
             
         case .primaryContent(_): return tableView.width //post should be a square
             
         case .comments(_): return 50
+            
+        case .captions(_): return 70
         }
     }
 }

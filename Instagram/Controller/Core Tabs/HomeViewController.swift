@@ -13,6 +13,7 @@ struct HomeFeedRenderViewModel {
     let header: PostRenderViewModel
     let post: PostRenderViewModel
     let action: PostRenderViewModel
+    let captions: PostRenderViewModel
     let comments: PostRenderViewModel
 }
 
@@ -27,6 +28,7 @@ class HomeViewController: UIViewController {
         tableView.register(InstagramFeedHeaderTableViewCell.self, forCellReuseIdentifier: InstagramFeedHeaderTableViewCell.identifier)
         tableView.register(InstagramFeedActionsTableViewCell.self, forCellReuseIdentifier: InstagramFeedActionsTableViewCell.identifier)
         tableView.register(InstagramFeedGeneralTableViewCell.self, forCellReuseIdentifier: InstagramFeedGeneralTableViewCell.identifier)
+        tableView.register(InstagramFeedCaptionTableViewCell.self, forCellReuseIdentifier: InstagramFeedCaptionTableViewCell.identifier)
         return tableView
     }()
     
@@ -60,25 +62,31 @@ class HomeViewController: UIViewController {
     
     //MARK: - Configure models for use
     private func createMockModels() {
+        
+        var comments = [PostComment]()
+        for i in 0..<2 {
+            comments.append(PostComment(identifier: "123_\(i)",
+                                        username: i % 2 == 0 ? "adam_link" : "solo.wonder",
+                                        text: i % 2 == 0 ? "Great chairs" : "How do i get similar furnitures?",
+                                        createdDate: Date(), likes: []))
+        }
+        
         let user = User(username: "Joe_king", bio: "Music Artist",
-                        name: (first: "Steve", last: "Joe"), birthday: Date(), profilePhoto: URL(string: "Roy3")!, gender: .male,
+                        name: (first: "Steve", last: "Joe"), birthday: Date(),
+                        profilePhoto: URL(string: "Roy3")!, gender: .male,
                         counts: UserCount(following: 1, followers: 1, posts: 3), joinDate: Date())
         
         let post = UserPost(identifier: "", postType: .photo,
                             thumbnailImage: URL(string: "Roy3")!,
                             postURL: URL(string: "https://www.google.com")!,
-                            caption: "", likeCount: [],
-                            comments: [], createdDate: Date(), taggedUser: [], owner: user)
-        
-        var comments = [PostComment]()
-        for i in 0..<2 {
-            comments.append(PostComment(identifier: "123_\(i)", username: "adam_link", text: "Great Post", createdDate: Date(), likes: []))
-        }
+                            caption: "Trying on these new set of furnitures i got from IKEA", likeCount: [],
+                            comments: comments, createdDate: Date(), taggedUser: [], owner: user)
         
         for _ in 0..<5 {
             let viewModel = HomeFeedRenderViewModel(header: PostRenderViewModel(renderType: .header(provider: user)),
                                                     post: PostRenderViewModel(renderType: .primaryContent(provider: post)),
                                                     action: PostRenderViewModel(renderType: .actions(provider: "")),
+                                                    captions: PostRenderViewModel(renderType: .captions(provider: post)),
                                                     comments: PostRenderViewModel(renderType: .comments(comments: comments)))
             
             feedRenderModels.append(viewModel) // only one section
@@ -86,6 +94,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    //MARK: - Configure Navigation Header
     private func configureNavigationHeaderImage() {
         //left text logo
         let logo = UIImageView()
@@ -115,6 +124,7 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(chatVC, animated: true)
     }
     
+    //MARK: - Logout if not authenticated
     private func handleNotAuthenticated() {
         //Check Auth status
         if Auth.auth().currentUser == nil {
@@ -133,7 +143,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return feedRenderModels.count * 4 // 4 sections
+        return feedRenderModels.count * 5 // 5 sections
     }
     
     //MARK: - Number of subsections
@@ -147,12 +157,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         ///Design an expression to make subsection
         //for each batch of 4 sections we want to use the same model
         else {// from calculation -> (x section, subsection) = (1, 0) (2, 0) (3, 0) || (4, 1) (5, 1) (6, 1)
-            let subsection = x % 4 == 0 ? x/4 : ((x - (x % 4)) / 4) // modulus operator returns the remainder after dividing
+            let subsection = x % 5 == 0 ? x/5 : ((x - (x % 5)) / 5) // modulus operator returns the remainder after dividing
             model = feedRenderModels[subsection] // grab the respective position defined above
         }
         
         // for values of x above
-        let subsection = x % 4
+        let subsection = x % 5
         
         if subsection == 0 {
             // header
@@ -167,10 +177,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         else if subsection == 3 {
+            // caption
+            return 2
+        }
+        else if subsection == 4 {
             // comments
             switch model.comments.renderType { // number of rows to display comments in home feed
             case .comments(let comments): return comments.count > 2 ? 2 : comments.count
-            case .header, .actions, .primaryContent: return 0
+            case .header, .actions, .primaryContent, .captions: return 0
             }
         }
         return 0
@@ -202,7 +216,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.delegate = self
                 return cell
                 
-            case .comments, .actions, .primaryContent: return UITableViewCell()
+            case .comments, .actions, .primaryContent, .captions: return UITableViewCell()
             }
         }
         else if subsection == 1 {
@@ -213,7 +227,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.configure(with: post)
                 return cell
                 
-            case .comments, .actions, .header: return UITableViewCell()
+            case .comments, .actions, .header, .captions: return UITableViewCell()
             }
         }
         else if subsection == 2 {
@@ -225,16 +239,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.delegate = self
                 return cell
                 
-            case .comments, .header, .primaryContent: return UITableViewCell()
+            case .comments, .header, .primaryContent, .captions: return UITableViewCell()
             }
         }
         else if subsection == 3 {
+            //captions
+            switch model.captions.renderType {
+            case .captions(let post):
+                break
+            case .header, .actions, .primaryContent, .comments: return UITableViewCell()
+            }
+        }
+        else if subsection == 4 {
             switch model.comments.renderType {
             case .comments(let comments):
                 let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedGeneralTableViewCell.identifier, for: indexPath) as! InstagramFeedGeneralTableViewCell
                 return cell
                 
-            case .header, .actions, .primaryContent: return UITableViewCell()
+            case .header, .actions, .primaryContent, .captions: return UITableViewCell()
             }
         }
         return UITableViewCell()
@@ -253,9 +275,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else if subsection == 2 {
             //actions
-            return 60
+            return 50
         }
         else if subsection == 3 {
+            //captions
+            return 40
+        }
+        else if subsection == 4 {
             //comments
             return 50
         }
@@ -268,9 +294,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let subsection = section % 4
-        if subsection == 3 { // comments subsection
-            return 70 // spacing  between posts
+        let subsection = section % 5
+        if subsection == 4 { // comments subsection
+            return 50 // spacing  between posts
         }else {
             return 0
         }
