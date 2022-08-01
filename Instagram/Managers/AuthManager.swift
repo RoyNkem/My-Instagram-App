@@ -7,11 +7,15 @@
 
 import Foundation
 import FirebaseAuth
+import CoreMedia
 
 public class AuthManager {
     
     static let shared = AuthManager()
     
+    private let firebaseAuth = Auth.auth()
+    
+    //MARK: - SIGN UP
     public func registerNewUser(username: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
         /*
          - Check if username is available
@@ -20,7 +24,7 @@ public class AuthManager {
         DatabaseManager.shared.canCreateNewUser(with: email, username: username) { canCreate in
             if canCreate {
                 // - Create account
-                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                self.firebaseAuth.createUser(withEmail: email, password: password) { authResult, error in
                     guard error == nil, authResult != nil else {
                         //firebase auth could not create account with username or email
                         completion(false)
@@ -47,11 +51,12 @@ public class AuthManager {
         }
     }
     
+    //MARK: - LOGIN
     public func loginUser(username: String?, email: String?, password: String, completion: @escaping (Bool) -> Void) { // login with username or email
         
         if let email = email {
             // email log in
-            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            firebaseAuth.signIn(withEmail: email, password: password) { authResult, error in
                 guard authResult != nil, error == nil else {
                     completion(false) // we used completion inside of a closure, so the scope needs to "escape"
                     return
@@ -64,16 +69,26 @@ public class AuthManager {
         }
     }
     
-    //logout firebase user
+    //MARK: - LOGOUT
     public  func logout(completion: (Bool) -> Void) {
         
-        let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             completion(true)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
             completion(false)
+        }
+    }
+    
+    //MARK: - RESET PASWWORD
+    public func resetPassword(email: String, onSuccess: @escaping() -> Void, onError: @escaping(_ errorMessage: String) -> Void) {
+        firebaseAuth.sendPasswordReset(withEmail: email) { (error) in
+            if error == nil {
+                onSuccess()
+            } else {
+                onError(error!.localizedDescription)
+            }
         }
     }
 }

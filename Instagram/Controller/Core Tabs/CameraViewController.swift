@@ -14,7 +14,6 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.setToolbarHidden(true, animated: false)
-        
         view.backgroundColor = .systemBackground
     }
     

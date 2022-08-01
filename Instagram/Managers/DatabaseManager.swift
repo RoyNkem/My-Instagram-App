@@ -31,7 +31,8 @@ public class DatabaseManager {
     ///     - completion Async call back for result if database entry suceeded
     public func insertNewUser(with email: String, username: String, completion: @escaping (Bool) -> Void) {
         
-        database.child(email.safeDatabaseKey()).setValue(["username": username]) { error, _ in
+        let userObject = ["username": username] as [String: Any]
+        database.child("\(email.safeDatabaseKey())/profile/").setValue(userObject) { error, _ in
             if error == nil {
                 //succeeded
                 completion(true)
