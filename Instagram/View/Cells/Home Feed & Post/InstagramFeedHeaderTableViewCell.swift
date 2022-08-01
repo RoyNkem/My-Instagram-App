@@ -15,10 +15,10 @@ protocol InstagramFeedHeaderTableViewCellDelegate: AnyObject {
 final class InstagramFeedHeaderTableViewCell: UITableViewCell {
     
     public weak var delegate: InstagramFeedHeaderTableViewCellDelegate?
-
+    
     static let identifier = "InstagramFeedHeaderTableViewCell"
     
-        //MARK: - Declare UI Elements
+    //MARK: - Declare UI Elements
     private let profilePhotoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true

@@ -155,6 +155,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         case .header(let user):
             let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedHeaderTableViewCell.identifier, for: indexPath) as! InstagramFeedHeaderTableViewCell
             cell.configure(with: user)
+            cell.delegate = self
             return cell
             
         case .primaryContent(let post):
@@ -223,5 +224,24 @@ extension PostViewController: InstagramFeedGeneralTableViewCellDelegate, Instagr
     
     func didTapSaveButton() {
         // bookmark post to view later
+    }
+}
+
+//MARK: Header Delegate Methods
+extension PostViewController: InstagramFeedHeaderTableViewCellDelegate {
+    func didTapMoreButton() {
+        let actionSheet = UIAlertController(title: "Post options", message: nil, preferredStyle: .actionSheet)
+        let reportAction = UIAlertAction(title: "Report Post", style: .destructive) { [weak self] _ in
+            self?.reportPost()
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addActions(reportAction, cancel)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func reportPost() {
+        
     }
 }

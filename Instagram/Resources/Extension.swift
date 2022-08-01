@@ -214,7 +214,7 @@ extension UIImage{
     class func getColoredRectImageWith(color: CGColor, andSize size: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0) //create graphics  context with options: size in points, opaque bool and scale
         let graphicsContext = UIGraphicsGetCurrentContext() //returns current context created above
-        graphicsContext?.setFillColor(color) // set fill color using parameter pass from super func.
+        graphicsContext?.setFillColor(color) // set fill color using parameter pass from higher func.
         
         let rectangle = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         graphicsContext?.fill(rectangle) //paints the specified area with color passed

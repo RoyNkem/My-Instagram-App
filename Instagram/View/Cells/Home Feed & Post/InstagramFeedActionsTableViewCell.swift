@@ -42,7 +42,7 @@ final class InstagramFeedActionsTableViewCell: UITableViewCell {
     private let shareButton: UIButton = {
         let button = UIButton()
         let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
-        let image = UIImage(systemName: "arrow.uturn.right", withConfiguration: config)
+        let image = UIImage(systemName: "paperplane", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .label
         return button

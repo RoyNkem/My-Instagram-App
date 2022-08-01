@@ -35,16 +35,28 @@ class HomeViewController: UIViewController {
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureTableView()
+        configureNavigationHeaderImage()
+        createMockModels()
+
         view.addSubviews(tableView)
         
+        view.backgroundColor = .systemBackground
+    }
+    
+    private func configureTableView() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(didPullRefresh), for: .valueChanged)
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    @objc private func didPullRefresh() {
+        // when refresh is done
         
-        view.backgroundColor = .systemBackground
-        configureNavigationHeaderImage()
-
-        createMockModels()
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -178,7 +190,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else if subsection == 3 {
             // caption
-            return 2
+            return 1
         }
         else if subsection == 4 {
             // comments
@@ -201,11 +213,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         //for each batch of 4 sections we want to use the same model
         else {// from calculation -> (section, position) = (1, 0) (2, 0) (3, 0) || (4, 1) (5, 1) (6, 1)
-            let subsection = x % 4 == 0 ? x/4 : ((x - (x % 4)) / 4) // modulus operator returns the remainder after dividing
+            let subsection = x % 5 == 0 ? x/5 : ((x - (x % 5)) / 5) // modulus operator returns the remainder after dividing
             model = feedRenderModels[subsection] // grab the respective position defined above
         }
         
-        let subsection = x % 4
+        let subsection = x % 5
         
         if subsection == 0 {
             // header
@@ -246,14 +258,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             //captions
             switch model.captions.renderType {
             case .captions(let post):
-                break
+                let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedCaptionTableViewCell.identifier, for: indexPath) as! InstagramFeedCaptionTableViewCell
+                cell.configure(with: post)
+                
             case .header, .actions, .primaryContent, .comments: return UITableViewCell()
             }
         }
         else if subsection == 4 {
+            //comments
             switch model.comments.renderType {
             case .comments(let comments):
                 let cell = tableView.dequeueReusableCell(withIdentifier: InstagramFeedGeneralTableViewCell.identifier, for: indexPath) as! InstagramFeedGeneralTableViewCell
+                cell.delegate = self
+                cell.configure(with: comments)
                 return cell
                 
             case .header, .actions, .primaryContent, .captions: return UITableViewCell()
@@ -264,7 +281,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     //MARK: - Row Height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let subsection = indexPath.section % 4
+        let subsection = indexPath.section % 5
         if subsection == 0 {
             //header
             return 50
@@ -279,7 +296,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else if subsection == 3 {
             //captions
-            return 40
+            return 70
         }
         else if subsection == 4 {
             //comments
@@ -297,7 +314,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let subsection = section % 5
         if subsection == 4 { // comments subsection
             return 50 // spacing  between posts
-        }else {
+        } else {
             return 0
         }
     }
@@ -308,7 +325,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 //MARK: Header Delegate Methods
-extension HomeViewController: InstagramFeedHeaderTableViewCellDelegate {
+extension HomeViewController: InstagramFeedHeaderTableViewCellDelegate, InstagramFeedActionsTableViewCellDelegate, InstagramFeedGeneralTableViewCellDelegate {
     func didTapMoreButton() {
         let actionSheet = UIAlertController(title: "Post options", message: nil, preferredStyle: .actionSheet)
         let reportAction = UIAlertAction(title: "Report Post", style: .destructive) { [weak self] _ in
@@ -324,11 +341,8 @@ extension HomeViewController: InstagramFeedHeaderTableViewCellDelegate {
     func reportPost() {
         
     }
-}
 
 //MARK: Action Buttons Delegate Methods
-
-extension HomeViewController: InstagramFeedActionsTableViewCellDelegate {
     func didTapLikeButton() {
         //animate heart icon
     }
@@ -343,5 +357,13 @@ extension HomeViewController: InstagramFeedActionsTableViewCellDelegate {
     
     func didTapSaveButton() {
         // bookmark post to view later
+    }
+    
+//MARK: Comments Delegate Methods
+    func didTapCommentLikeButton() {
+        //like comments
+    }
+    func didTapShowMoreCommentsButton() {
+        //show more comments in VC
     }
 }

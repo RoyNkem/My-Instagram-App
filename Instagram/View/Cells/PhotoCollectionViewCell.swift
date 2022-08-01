@@ -54,7 +54,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     public func configure(with ImageName: String) {
         
         for x in 0..<100 {
-            photoImageView.image = UIImage(named: x % 2 == 0 ? "Roy2" : "Roy3")
+            photoImageView.image = UIImage(named: x % 2 == 0 ? "Chair" : "Chair")
         }
     }
 }

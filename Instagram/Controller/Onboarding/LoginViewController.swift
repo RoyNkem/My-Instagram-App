@@ -125,10 +125,6 @@ class LoginViewController: UIViewController {
         termsButton.addTarget(self, action: #selector(didTapTermsButton), for: .touchUpInside)
         
         privacyButton.addTarget(self, action: #selector(didTapPrivacyButton), for: .touchUpInside)
-        
-//        //Textfield
-//        usernameEmailField.addTarget(self, action: #selector(LoginViewController.textFieldDidChange(_:)), for: .editingChanged)
-//        passwordField.addTarget(self, action: #selector(LoginViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
