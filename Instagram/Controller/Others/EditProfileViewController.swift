@@ -13,18 +13,21 @@ struct EditProfileFormModel {
     var value: String?
 }
 
-class EditProfileViewController: UIViewController {
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let pickerVC = UIImagePickerController()
     
+    //MARK: - Define UI Elements
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(FormTableViewCell.self, forCellReuseIdentifier: FormTableViewCell.identifier)
         return tableView
     }()
     
+    private let profilePhotoImageView = UIImageView()
+    
     private let profilePictureLabel = UILabel()
-
+    
     private let profilePhotoButton = UIButton()
     
     private var models = [[EditProfileFormModel]]() // 2 Dimensional array i.e column & rows
@@ -34,7 +37,7 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         pickerVC.delegate = self
         pickerVC.allowsEditing = true
-       
+        
         configureModels()
         configureTableView()
         navigationBarButtons()
@@ -58,7 +61,7 @@ class EditProfileViewController: UIViewController {
     func createTableHeaderView() -> UIView {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: view.height/4).integral)
         let size = header.height/1.5
-
+        
         profilePictureLabel.text = "Edit Picture"
         profilePictureLabel.textColor = .label
         profilePictureLabel.frame = CGRect(x: (view.width - size)/2 + 35, y: (header.height - size)/2 + size/2, width: size - 70, height: size/4)
@@ -67,15 +70,19 @@ class EditProfileViewController: UIViewController {
         profilePictureLabel.layer.masksToBounds = true
         profilePictureLabel.layer.cornerRadius = 4
         
+        profilePhotoImageView.frame = CGRect(x: (view.width - size)/2, y: (header.height - size)/2, width: size, height: size)
+        profilePhotoImageView.image = UIImage(systemName: "person.circle")
+        profilePhotoImageView.layer.masksToBounds = true
+        profilePhotoImageView.layer.cornerRadius = size/2
+        profilePhotoImageView.layer.borderWidth = 1
+        profilePhotoImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        
+        // this button has no visible appearnce and just covers the imageView to enable touch control for editing image
         profilePhotoButton.frame = CGRect(x: (view.width - size)/2, y: (header.height - size)/2, width: size, height: size)
-        profilePhotoButton.setBackgroundImage(UIImage(systemName: "person.circle"), for: .normal)
-        profilePhotoButton.layer.masksToBounds = true
-        profilePhotoButton.layer.cornerRadius = size/2
-        profilePhotoButton.layer.borderWidth = 1
-        profilePhotoButton.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        profilePhotoButton.backgroundColor = .clear
         profilePhotoButton.addTarget(self, action: #selector(didTapProfilePhotoButton), for: .touchUpInside)
         
-        header.addSubviews(profilePhotoButton, profilePictureLabel)
+        header.addSubviews(profilePhotoImageView, profilePhotoButton, profilePictureLabel)
         return header
     }
     
@@ -124,9 +131,9 @@ class EditProfileViewController: UIViewController {
             guard let strongSelf = self else { return }
             strongSelf.pickerVC.sourceType = .photoLibrary
             
-            
             self?.present(strongSelf.pickerVC, animated: true)
         }
+        //dismiss alertVC
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionSheet.addAction(takePhoto)
@@ -137,12 +144,6 @@ class EditProfileViewController: UIViewController {
         actionSheet.popoverPresentationController?.sourceRect = view.bounds
         
         present(actionSheet, animated: true)
-    }
-    
-    //MARK: - Tap Save To Save Changes
-    @objc private func didTapSave() {
-        // save changes to database
-        dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Tap Cancel To Discard Changes
@@ -169,24 +170,38 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-}
-
-//MARK: - EXTENSIONS
-extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // info is a dictionary. Get image out of the dictionary
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-            profilePhotoButton.setImage(image, for: .normal)
+    //MARK: - Tap Save To Save Changes
+    @objc private func didTapSave() {
+        // save changes to database
+        dismiss(animated: true, completion: nil)
+        //upload the selected photo to firebase storage
+        
+        guard let image = profilePhotoImageView.image else { return }
+        
+        StorageManager.shared.uploadUserProfileImage(with: image) { url in
+            DispatchQueue.main.async {
+                
+            }
         }
+    }
+    
+    //MARK: - IMAGE PICKER EXTENSIONS
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         picker.dismiss(animated: true, completion: nil)
+        // info is a dictionary. Get image out of the dictionary
+        guard let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage else {
+            return
+        }
+        
+        profilePhotoImageView.image = image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
 }
-
 extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
     //tableView Datasource
     func numberOfSections(in: UITableView) -> Int {
