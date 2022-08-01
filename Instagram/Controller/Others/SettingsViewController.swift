@@ -188,9 +188,10 @@ final class SettingsViewController: UIViewController {
                     if success {
                         //present loginvc
                         let loginVC = LoginViewController()
-                        self.present(loginVC, animated: true) {
-                            //returns screen to home after login again
-                        }
+                        loginVC.modalPresentationStyle = .fullScreen
+                        loginVC.navigationItem.setHidesBackButton(true, animated: false)
+                        self.present(loginVC, animated: true, completion: nil)
+                        
                     }
                     else {
                         // error occurred logging out

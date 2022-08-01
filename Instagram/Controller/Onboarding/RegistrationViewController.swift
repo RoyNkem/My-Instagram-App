@@ -175,9 +175,17 @@ class RegistrationViewController: UIViewController {
                 DispatchQueue.main.async {
                     if  password.count >= 6 && registered {
                         // good to go
+                        let alert = UIAlertController(title: "Successful!", message: "You have successfuly created a new account. Please return to login", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Go back to log in", style: .default, handler: {success in
+                            self.dismiss(animated: true, completion: nil)
+                        })
+                        
+                        alert.addAction(action)
+                        self.present(alert, animated: true)
+                        
                     }
                     else if !email.isEmpty && !password.isEmpty && password.count >= 8 && !username.isEmpty {
-                        let alert = UIAlertController(title: "Registration Error", message: "Unable to register at the moment. Please try to login", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Registration Error", message: "Unable to register at the moment. Please try to login or check your internet connection", preferredStyle: .alert)
                         let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
                         
                         alert.addAction(action)

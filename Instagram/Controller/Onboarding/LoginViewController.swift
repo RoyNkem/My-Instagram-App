@@ -15,13 +15,14 @@ class LoginViewController: UIViewController {
         //        static let width: CGFloat = frame.size.width - 60
     }
     
-    //MARK: - DECLARE UI Elements views for Login screen
+    //MARK: - DECLARE UI Elements
     
     private let usernameEmailField: UITextField = {
         
         let field = UITextField()
         field.placeholder = "Username or Email..."
         field.returnKeyType = .next
+        field.keyboardType = .emailAddress
         field.autocapitalizationType = .none
         field.setLeftPaddingPoints(10)
         field.autocorrectionType = .no
@@ -162,6 +163,7 @@ class LoginViewController: UIViewController {
         configueHeaderView()
     }
     
+    //MARK: - Header View
     private func configueHeaderView() {
         //check that HeaderView only has one subview i.e backgroundImage
         guard headerView.subviews.count == 1 else {
@@ -279,6 +281,9 @@ class LoginViewController: UIViewController {
     @objc private func didTapForgotPassword() {
         print("Forgot Password tapped")
         
+        let vc = ForgotPasswordViewController()
+        navigationController?.title = "Forgot Password"
+        present(vc, animated: true, completion: nil)
     }
     
     // MARK: - Terms Button
