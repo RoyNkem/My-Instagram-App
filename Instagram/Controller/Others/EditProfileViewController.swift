@@ -15,40 +15,59 @@ struct EditProfileFormModel {
 
 class EditProfileViewController: UIViewController {
     
+    let pickerVC = UIImagePickerController()
+    
     private let tableView: UITableView = {
-        
         let tableView = UITableView()
         tableView.register(FormTableViewCell.self, forCellReuseIdentifier: FormTableViewCell.identifier)
         return tableView
     }()
+    
+    private let profilePictureLabel = UILabel()
+
+    private let profilePhotoButton = UIButton()
     
     private var models = [[EditProfileFormModel]]() // 2 Dimensional array i.e column & rows
     
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        pickerVC.delegate = self
+        pickerVC.allowsEditing = true
+       
         configureModels()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.tableHeaderView = createTableHeaderView()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didTapSave))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapCancel))
+        configureTableView()
+        navigationBarButtons()
         
         view.backgroundColor = .secondarySystemBackground
         
         view.addSubviews(tableView)
     }
     
+    private func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableHeaderView = createTableHeaderView()
+    }
+    private func navigationBarButtons() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didTapSave))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapCancel))
+    }
+    
     //MARK: - TableView Header
     func createTableHeaderView() -> UIView {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: view.height/4).integral)
-        
         let size = header.height/1.5
-        let profilePhotoButton = UIButton(frame: CGRect(x: (view.width - size)/2, y: (header.height - size)/2, width: size, height: size))
+
+        profilePictureLabel.text = "Edit Picture"
+        profilePictureLabel.textColor = .label
+        profilePictureLabel.frame = CGRect(x: (view.width - size)/2 + 35, y: (header.height - size)/2 + size/2, width: size - 70, height: size/4)
+        profilePictureLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        profilePictureLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        profilePictureLabel.layer.masksToBounds = true
+        profilePictureLabel.layer.cornerRadius = 4
+        
+        profilePhotoButton.frame = CGRect(x: (view.width - size)/2, y: (header.height - size)/2, width: size, height: size)
         profilePhotoButton.setBackgroundImage(UIImage(systemName: "person.circle"), for: .normal)
         profilePhotoButton.layer.masksToBounds = true
         profilePhotoButton.layer.cornerRadius = size/2
@@ -56,10 +75,9 @@ class EditProfileViewController: UIViewController {
         profilePhotoButton.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         profilePhotoButton.addTarget(self, action: #selector(didTapProfilePhotoButton), for: .touchUpInside)
         
-        header.addSubview(profilePhotoButton)
+        header.addSubviews(profilePhotoButton, profilePictureLabel)
         return header
     }
-    
     
     //MARK: - Set up Table Sections data
     private func configureModels() {
@@ -91,8 +109,34 @@ class EditProfileViewController: UIViewController {
         tableView.frame = view.bounds
     }
     
+    //MARK: - Tap Change Profile Picture
     @objc private func didTapProfilePhotoButton() {
+        let actionSheet = UIAlertController(title: "Profile Picture", message: "Change Profile Picture", preferredStyle: .actionSheet)
+        //Change profile picture from camera
+        let takePhoto = UIAlertAction(title: "Take Photo", style: .default) { [weak self] select in
+            guard let strongSelf = self else { return }
+            strongSelf.pickerVC.sourceType = .camera
+            
+            self?.present(strongSelf.pickerVC, animated: true)
+        }
+        //Change profile picture from photos in library
+        let libraryPhoto = UIAlertAction(title: "Choose from library", style: .default) { [weak self] select in
+            guard let strongSelf = self else { return }
+            strongSelf.pickerVC.sourceType = .photoLibrary
+            
+            
+            self?.present(strongSelf.pickerVC, animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        actionSheet.addAction(takePhoto)
+        actionSheet.addAction(libraryPhoto)
+        actionSheet.addAction(cancelAction)
+        
+        actionSheet.popoverPresentationController?.sourceView = view
+        actionSheet.popoverPresentationController?.sourceRect = view.bounds
+        
+        present(actionSheet, animated: true)
     }
     
     //MARK: - Tap Save To Save Changes
@@ -125,30 +169,25 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    //MARK: - Tap Change Profile Picture
-    @objc private func didTapChangeProfilePicture() {
-        let actionSheet = UIAlertController(title: "Profile Picture", message: "Change Profile Picture", preferredStyle: .actionSheet)
-        let takePhoto = UIAlertAction(title: "Take Photo", style: .default, handler: nil)
-        let libraryPhoto = UIAlertAction(title: "Choose from library", style: .default) { select in
-            print("library")
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        actionSheet.addAction(takePhoto)
-        actionSheet.addAction(libraryPhoto)
-        actionSheet.addAction(cancelAction)
-        
-        actionSheet.popoverPresentationController?.sourceView = view
-        actionSheet.popoverPresentationController?.sourceRect = view.bounds
-        
-        present(actionSheet, animated: true)
-    }
 }
 
 //MARK: - EXTENSIONS
+extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // info is a dictionary. Get image out of the dictionary
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            profilePhotoButton.setImage(image, for: .normal)
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
 
 extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
-    
     //tableView Datasource
     func numberOfSections(in: UITableView) -> Int {
         return models.count

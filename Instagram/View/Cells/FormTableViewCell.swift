@@ -21,9 +21,7 @@ class FormTableViewCell: UITableViewCell {
     public weak var delegate: FormTableViewCellDelegate?
     
     //MARK: - DECLARE UI Elements for Cell
-    
     private let formLabel: UILabel = {
-        
         let label = UILabel()
         label.textColor = .label
         label.numberOfLines = 1
@@ -31,7 +29,6 @@ class FormTableViewCell: UITableViewCell {
     }()
     
     private let field: UITextField = {
-        
         let field = UITextField()
         field.returnKeyType = .done
         return field
