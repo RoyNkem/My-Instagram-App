@@ -42,17 +42,29 @@ final class NotificationViewController: UIViewController {
     //MARK: - VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureTableView()
         navigationItem.title = "Notifications"
-        
-        tableView.delegate = self
-        tableView.dataSource = self
         
         view.addSubviews(tableView, spinner)
         
         view.backgroundColor = .systemBackground
         
         fetchNotifications()
+    }
+    
+    private func configureTableView() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(didPullRefresh), for: .valueChanged)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    @objc private func didPullRefresh() {
+        // when refresh is done
+        
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
